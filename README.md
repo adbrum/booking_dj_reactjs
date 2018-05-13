@@ -7,5 +7,4 @@
 - Run React app with `npm start`.
 - Build React app using `npm run build`.
 
-# booking_django_reactjs
 # booking_dj_reactjs
