@@ -2,8 +2,22 @@
   "name": "booking_dj_ractjs",
   "version": "0.1.0",
   "private": true,
+  "author": "Adriano Regis",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "file-loader": "^0.9.0",
+    "jquery": "^3.3.1",
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack-bundle-tracker": "0.0.93"
+  },
   "dependencies": {
     "axios": "^0.18.0",
+    "babel": "^6.23.0",
+    "jquery-browserify": "^1.8.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
@@ -19,5 +33,6 @@
   "engines": {
     "node": "8.9.4",
     "npm": "5.6.0"
-  }
+  },
+  "proxy": "http://127.0.0.1:3000"
 }

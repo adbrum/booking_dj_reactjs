@@ -1,12 +1,8 @@
 import json
-from datetime import date
 
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
-from django.template.loader import render_to_string
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 from core.models import Booking
 
@@ -16,18 +12,6 @@ def index(request):
     a = json.dumps(_all)
     print(_all)
     return JsonResponse(list(a))
-
-def api(request):
-    messages = list()
-    for message in Message.objects.all():
-        messages.append({
-            'content': message.content,
-            'time_ago': message.time_ago,
-            'pk': message.pk,
-            'author': message.author
-        })
-    return JsonResponse({'messages': messages})
-
 
 def detail(request, pk):
     bookings = list()
@@ -42,19 +26,47 @@ def detail(request, pk):
 
     return JsonResponse(bookings, safe=False)
 
+
+@csrf_exempt
 def details(request, pk):
-    bookings = list()
-    details = Booking.objects.filter(author=pk)
-    for detail in details:
+    print(request)
+    details = Booking.objects.filter(author=pk).values()
+
+    return JsonResponse(list(details), safe=False)
+
+
+@csrf_exempt
+def create(request):
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method == 'POST':
+        bookings = []
+        booking = Booking(
+            name=data['name'],
+            author=data['author'],
+            date=data['date'],
+            description=data['description']
+        )
+
+        booking.save()
+
+        detail = Booking.objects.get(pk=booking.pk)
         bookings.append({
             "id": detail.id,
-            "author": 1,
+            "author": detail.author,
             "name": detail.name,
             "date": detail.date,
             "description": detail.description
         })
 
-    return JsonResponse(bookings, safe=False)
+        return JsonResponse(bookings, safe=False)
+
+
+@csrf_exempt
+def delete(request, pk):
+    if request.method == 'DELETE':
+        entry = get_object_or_404(Booking, pk=pk)
+        entry.delete()
+        return JsonResponse({"true": "true"}, safe=False)
 
 # def calendar(request):
 #     today = date.today()
@@ -87,12 +99,7 @@ def details(request, pk):
 #     return render(request, 'bookings/partial_book_create.html', {'form': form})
 #
 #
-# def delete(request, pk):
-#     # print('XXXXXXXXXxx', request.POST)
-#     # if request.method == 'POST':
-#     entry = get_object_or_404(Booking, pk=pk)
-#     entry.delete()
-#     return HttpResponseRedirect('/calendar')
+
 #
 #
 # def signup(request):

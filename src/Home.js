@@ -1,6 +1,10 @@
 import React, {Component} from 'react'
+import axios from 'axios'
 import Bookings from "./Bookings";
 import {Link} from "react-router-dom";
+
+axios.defaults.xsrfCookieName = 'csrftoken'
+axios.defaults.xsrfHeaderName = 'X-CSRFToken'
 
 class Home extends Component {
     constructor(props) {
@@ -18,13 +22,13 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        //     axios.post('http://127.0.0.1:8000/login/', { username: 'adriano', password: 'ArVl92br'})
-        //         .then(res => {
-        //             console.log('Login', res)
-        //         })
-        //         .catch(err => {
-        //             console.log('Login error', err.response)
-        //         });
+            axios.post('http://127.0.0.1:8000/api-auth/login/', { username: 'adriano', assword: 'adminum'})
+                .then(res => {
+                    console.log('Login', res)
+                })
+                .catch(err => {
+                    console.log('Login error', err.response)
+                });
     }
 
     render() {

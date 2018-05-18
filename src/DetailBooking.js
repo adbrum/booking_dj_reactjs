@@ -12,7 +12,7 @@ class DetailBooking extends Component {
             editBooking: '',
             show: true,
             redirect: false,
-            exclude: false
+            typeRedirect: ''
         }
 
         this.toggleDiv = this.toggleDiv.bind(this)
@@ -34,15 +34,14 @@ class DetailBooking extends Component {
     }
 
     removeBooking = (index) => {
-        api.delete(`/bookings/` + index)
+        api.delete(`booking/delete/` + index)
             .then(res => {
                 //console.log(res);
-                //console.log(res.data);
+                console.log(res.data);
                 this.setState({
                     redirect: 'success',
-                    exclude: true
+                    typeRedirect: 'exclude'
                 })
-                // history.push('/bookings')
             })
             .catch(err => {
                 console.log(err)
@@ -53,6 +52,9 @@ class DetailBooking extends Component {
         event.preventDefault()
 
         if (this.refs.name.value !== '') {
+            this.setState({
+                details: null
+            })
 
             let author = 1
             let name = this.refs.name.value
@@ -68,13 +70,16 @@ class DetailBooking extends Component {
 
             let details = this.state.details
 
+            console.log('TTTTTTTT: ', details)
+
             details.push(detail)
 
             this.setState({
                 details: details
             })
+            console.log('GGGGGGGGGGGGG: ', this.state.details)
 
-            api.put(`/bookings/${id}`, detail)
+            api.post(`/bookings/${id}`, detail)
                 .then(res => {
                     //console.log(res);
                     //console.log(res.data);
@@ -82,18 +87,17 @@ class DetailBooking extends Component {
                         redirect: 'success',
                         editBooking: '',
                         details: res.data,
+                        typeRedirect: 'update'
                     })
                 })
                 .catch(err => {
                     console.log(err)
                 })
         }
-
     }
 
     editBooking = (id) => {
         this.setState({editBooking: id})
-
     }
 
     toggleDiv = () => {

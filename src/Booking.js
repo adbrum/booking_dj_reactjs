@@ -1,7 +1,10 @@
 import React, {Component} from 'react'
 import api from './api'
+import axios from 'axios'
+
 import {Route} from "react-router-dom";
 import Success from "./Success";
+import $ from 'jquery';
 
 class Booking extends Component {
     constructor(props) {
@@ -21,7 +24,7 @@ class Booking extends Component {
 
         if (this.refs.name.value !== '') {
 
-            let author = 1
+            let author = '1'
             let name = this.refs.name.value
             let date = this.refs.date.value
             let description = this.refs.description.value
@@ -41,10 +44,10 @@ class Booking extends Component {
                 bookings: bookings
             })
 
-            api.post(`/bookings`, booking)
+            api.post(`/booking/create/`, booking)
                 .then(res => {
                     // console.log(res);
-                    //console.log(res.data);
+                    // console.log(res.data);
                     this.setState({
                         bookings: res.data,
                         redirect: 'success'
@@ -79,7 +82,7 @@ class Booking extends Component {
 
                         <input type="text" ref="date" placeholder="__/__/___" className="form-control"/>
 
-                        <label htmlFor="{{ form.description.id_for_label }}">Descrição</label>
+                        <label htmlFor="">Descrição</label>
                         <textarea type="text" ref="description" placeholder="Descrição" className="form-control"/>
                         <hr/>
                         <button type="submit" onClick={(e) => this.addBooking(e)} className="btn btn-success">Salvar
