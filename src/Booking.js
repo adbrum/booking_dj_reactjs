@@ -24,7 +24,7 @@ class Booking extends Component {
 
         if (this.refs.name.value !== '') {
 
-            let author = '1'
+            let author = 1
             let name = this.refs.name.value
             let date = this.refs.date.value
             let description = this.refs.description.value

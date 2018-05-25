@@ -4,14 +4,33 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
+from bookings.serialyzers import UserSerializer, GroupSerializer
 from core.models import Booking
+
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
 
 
 def index(request):
-    _all = Booking.objects.all()
-    a = json.dumps(_all)
+    _all = Booking.objects.all().values()
+    # a = json.dumps(_all)
     print(_all)
-    return JsonResponse(list(a))
+    return JsonResponse(list(_all), safe=False)
 
 def detail(request, pk):
     bookings = list()
