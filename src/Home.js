@@ -29,37 +29,38 @@ class Home extends Component {
                 username: '',
                 password: ''
             },
-            show: true
+            show: true,
+            users: []
         }
         this.loginHandle = this.loginHandle.bind(this)
     }
 
     async componentDidMount() {
-        await fetch("http://127.0.0.1:8000/admin/login/", {
-            method: "POST",
-            body: {
-                "username": 'admin',
-                "password": 'adminum',
-            },
-            headers: {
-                      "Access-Control-Allow-Origin": "*",
-                      "Access-Control-Allow-Credentials": "true",
-                      "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-                      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-                    },
-        })
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    console.log(result.items)
-                },
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+        //     await fetch("http://localhost:8000/admin/login/", {
+        //         method: "POST",
+        //         body: {
+        //             "username": 'admin',
+        //             "password": 'adminum',
+        //         },
+        //         headers: {
+        //                   "Access-Control-Allow-Origin": "*",
+        //                   "Access-Control-Allow-Credentials": "true",
+        //                   "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+        //                   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+        //                 },
+        //     })
+        //         .then(res => res.json())
+        //         .then(
+        //             (result) => {
+        //                 console.log(result.items)
+        //             },
+        //             (error) => {
+        //                 this.setState({
+        //                     isLoaded: true,
+        //                     error
+        //                 });
+        //             }
+        //         )
 
         // var getCookie = function (name) {
         //     var cookieValue = null;
@@ -140,7 +141,10 @@ class Home extends Component {
         //     }
         // })
         //     .then(res => {
-        //          console.log('RSPONSE: ', res)
+        //         console.log('RSPONSE: ', res)
+        //
+        //
+        //
         //     })
         //     .catch(err => {
         //         console.log('ERRO: ', err)
@@ -167,39 +171,36 @@ class Home extends Component {
 
         axios({
             method: "post",
-            url: "http://127.0.0.1:8000/api-token-auth/",
+            url: "http://localhost:8000/api-auth/login/",
             data: {
+
                 username: username,
                 password: password,
 
             },
-            // headers: {
-            //     "X-CSRFToken": csrftoken,
-            //     "Access-Control-Allow-Origin": "*",
-            //     // "Access-Control-Allow-Headers": "Origin, X-Requested-with, Content-Type, Accept, Authorization",
-            // },
+            headers: {
+                "X-CSRFToken": csrftoken,
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Headers": "Origin, X-Requested-with, Content-Type, Accept, Authorization",
+            },
         })
             .then(res => {
+                axios({
+                        method: "get",
+                        url: "http://localhost:8000/api",
+                    },
+                )
+                    .then(res => {
+                        console.log('RSPONSE: ', res)
 
+                    })
+                    .catch(err => {
+                        console.log('ERRO: ', err)
+                    })
             })
             .catch(err => {
                 console.log('ERRO: ', err)
             })
-
-        //
-        // fetch('http://127.0.0.1:8000/api-token-auth/', {
-        //     method: 'POST',
-        //     // headers: {
-        //     //     Accept: 'application/json',
-        //     //     'Content-Type': 'application/json',
-        //     //      // "X-CSRFToken": csrftoken,
-        //     //      "Access-Control-Allow-Origin": "*",
-        //     // },
-        //     body: {
-        //         username: username,
-        //         password: password,
-        //     },
-        // });
     }
 
     render() {

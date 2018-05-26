@@ -1,14 +1,17 @@
 import json
 
+from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.response import Response
 
-from bookings.serialyzers import UserSerializer, GroupSerializer
+from bookings.serialyzers import UserSerializer, GroupSerializer, BookingSerializer
 from core.models import Booking
 
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -24,6 +27,16 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    
+    
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.filter().order_by('-created_at')
+    serializer_class = BookingSerializer
+
+
+class DetailsViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all().order_by('-created_at')
+    serializer_class = BookingSerializer
 
 
 def index(request):
@@ -33,6 +46,7 @@ def index(request):
     return JsonResponse(list(_all), safe=False)
 
 def detail(request, pk):
+    print('XXXXX: ', request.user.is_authenticated)
     bookings = list()
     detail = Booking.objects.get(pk=pk)
     bookings.append({
@@ -46,9 +60,9 @@ def detail(request, pk):
     return JsonResponse(bookings, safe=False)
 
 
-@csrf_exempt
+# @csrf_exempt
 def details(request, pk):
-    print(request)
+    print('XXXXX: ', request.user.is_authenticated)
     details = Booking.objects.filter(author=pk).values()
 
     return JsonResponse(list(details), safe=False)
@@ -121,17 +135,15 @@ def delete(request, pk):
 
 #
 #
-# def signup(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data['username']
-#             password = form.cleaned_data['password1']
-#             user = authenticate(username=username, password=password)
-#             login(request, user)
-#             return redirect('/calendar')
-#     else:
-#         form = UserCreationForm()
-#
-#     return render(request, 'registration/signup.html', {'form': form})
+def signup(request):
+
+    data = json.loads(request.body.decode('utf-8'))
+    username = data['username']
+    password = data['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        print('XXXXX: ', request.user.is_authenticated)
+        return JsonResponse({"true": "true"}, safe=False)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
