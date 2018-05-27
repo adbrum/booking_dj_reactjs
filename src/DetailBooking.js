@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import api from "./api";
 import {Link, Redirect, Route} from 'react-router-dom'
 import Success from "./Success";
+import axios from 'axios'
 
 class DetailBooking extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class DetailBooking extends Component {
     }
 
     componentDidMount() {
-        api.get(`/booking/${this.props.match.params.idBooking}`)
+        axios.get(`/booking/${this.props.match.params.idBooking}`)
             .then(res => {
                 const details = res.data
                 //console.log(details)
@@ -34,7 +35,7 @@ class DetailBooking extends Component {
     }
 
     removeBooking = (index) => {
-        api.delete(`booking/delete/` + index)
+        axios.delete(`/booking/delete/` + index)
             .then(res => {
                 //console.log(res);
                 console.log(res.data);
@@ -69,17 +70,12 @@ class DetailBooking extends Component {
             }
 
             let details = this.state.details
-
-            console.log('TTTTTTTT: ', details)
-
             details.push(detail)
-
             this.setState({
                 details: details
             })
-            console.log('GGGGGGGGGGGGG: ', this.state.details)
 
-            api.post(`/bookings/${id}`, detail)
+            axios.post(`/bookings/${id}`, detail)
                 .then(res => {
                     //console.log(res);
                     //console.log(res.data);

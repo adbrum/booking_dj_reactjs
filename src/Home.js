@@ -5,18 +5,19 @@ import Bookings from "./Bookings";
 import {Link} from "react-router-dom";
 import Cookies from 'js-cookie'
 import DjangoCSRFToken from 'django-react-csrftoken'
-import $ from 'jquery';
-import jQuery from 'jquery';
-
-window.$ = jQuery;
+// import $ from 'jquery';
+// import jQuery from 'jquery';
+//
+// window.$ = jQuery;
+import jQuery from "jquery";
 
 let csrftoken = Cookies.get('csrftoken');
 
-// import jQuery from "jquery";
+
 // let csrftoken = $.cookie('csrftoken');
 
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.xsrfCookieName = "csrftoken";
+
+// var csrftoken = getCookie('csrftoken');
 
 class Home extends Component {
     constructor(props) {
@@ -36,31 +37,58 @@ class Home extends Component {
     }
 
     async componentDidMount() {
-        //     await fetch("http://localhost:8000/admin/login/", {
-        //         method: "POST",
-        //         body: {
-        //             "username": 'admin',
-        //             "password": 'adminum',
-        //         },
-        //         headers: {
-        //                   "Access-Control-Allow-Origin": "*",
-        //                   "Access-Control-Allow-Credentials": "true",
-        //                   "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-        //                   "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-        //                 },
-        //     })
-        //         .then(res => res.json())
-        //         .then(
-        //             (result) => {
-        //                 console.log(result.items)
-        //             },
-        //             (error) => {
-        //                 this.setState({
-        //                     isLoaded: true,
-        //                     error
-        //                 });
+
+
+        // function getCookie(name) {
+        //     var cookieValue = null;
+        //     if (document.cookie && document.cookie !== '') {
+        //         var cookies = document.cookie.split(';');
+        //         for (var i = 0; i < cookies.length; i++) {
+        //             var cookie = jQuery.trim(cookies[i]);
+        //             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+        //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        //                 break;
         //             }
-        //         )
+        //         }
+        //     }
+        //     return cookieValue;
+        // }
+
+
+        // await fetch("http://localhost:8000/admin/login/", {
+        //     credentials: 'include',
+        //  method: 'POST',
+        // mode: 'cors',
+        //     referrer: 'no-referrer',
+        // headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'application/json',
+        //     'X-CSRFToken': csrftoken,
+        //     'Access-Control-Allow-Origin': '*',
+        //     'Access-Control-Allow-Headers': '*',
+        //     'Access-Control-Allow-Methods': '*',
+        //
+        // },
+        // body: {
+        //     username: 'admin1',
+        //     password: 'adminum',
+        // }
+        // })
+        //     // .then(
+        //     //     res => res.json(),
+        //     //     console.log(res),
+        //     // )
+        //     .then(
+        //         (result) => {
+        //             console.log(result)
+        //         },
+        //         (error) => {
+        //             this.setState({
+        //                 isLoaded: true,
+        //                 error
+        //             });
+        //         }
+        //     )
 
         // var getCookie = function (name) {
         //     var cookieValue = null;
@@ -134,7 +162,7 @@ class Home extends Component {
 
         // axios({
         //     method: "post",
-        //     url: "http://localhost:8000/admin/login/",
+        //     url: "/admin/login/",
         //     data: {
         //         username: 'admin',
         //         password: 'adminum',
@@ -142,9 +170,6 @@ class Home extends Component {
         // })
         //     .then(res => {
         //         console.log('RSPONSE: ', res)
-        //
-        //
-        //
         //     })
         //     .catch(err => {
         //         console.log('ERRO: ', err)
@@ -169,30 +194,40 @@ class Home extends Component {
         let username = this.refs.username.value
         let password = this.refs.password.value
 
+        // fetch('http://localhost:8000/api-auth/login/', {
+        //     credentials: 'include',
+        //     method: 'POST',
+        //     // mode: 'same-origin',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //         'X-CSRFToken': csrftoken
+        //     },
+        //     body: {
+        //         username: username,
+        //         password: password,
+        //     }
+        // })
+
         axios({
             method: "post",
-            url: "http://localhost:8000/api-auth/login/",
+            url: "/login/",
             data: {
 
                 username: username,
                 password: password,
 
             },
-            headers: {
-                "X-CSRFToken": csrftoken,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "Origin, X-Requested-with, Content-Type, Accept, Authorization",
-            },
         })
             .then(res => {
+                console.log('RESPONSE: ', res)
                 axios({
                         method: "get",
-                        url: "http://localhost:8000/api",
+                        url: "http://localhost:8000/api/",
                     },
                 )
                     .then(res => {
                         console.log('RSPONSE: ', res)
-
                     })
                     .catch(err => {
                         console.log('ERRO: ', err)

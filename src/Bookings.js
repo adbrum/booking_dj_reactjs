@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Link, Route} from 'react-router-dom'
 import api from './api'
+import axios from 'axios'
 import DetailBooking from "./DetailBooking";
 
 class Bookings extends Component {
@@ -18,7 +19,7 @@ class Bookings extends Component {
 
     componentDidMount() {
         // axios.get(`http://localhost:3001/bookings/?author=${this.props.data.id}`)
-        api.get(`/bookings/1`)
+        axios.get(`/bookings/1`)
             .then(res => {
                 const bookings = res.data
                 // console.log(bookings)

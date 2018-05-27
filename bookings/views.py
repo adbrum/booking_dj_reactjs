@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from bookings.serialyzers import UserSerializer, GroupSerializer, BookingSerializer
@@ -12,6 +14,17 @@ from core.models import Booking
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, status
 
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def api_login(request):
+    username = request.data['username']
+    password = request.data['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -68,9 +81,12 @@ def details(request, pk):
     return JsonResponse(list(details), safe=False)
 
 
-@csrf_exempt
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
 def create(request):
+    print('XXXXX: ', request.user.id)
     data = json.loads(request.body.decode('utf-8'))
+    print('XXXXXX: ', data)
     if request.method == 'POST':
         bookings = []
         booking = Booking(

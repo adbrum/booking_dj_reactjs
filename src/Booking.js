@@ -44,7 +44,7 @@ class Booking extends Component {
                 bookings: bookings
             })
 
-            api.post(`/booking/create/`, booking)
+            axios.post(`/booking/create/`, booking)
                 .then(res => {
                     // console.log(res);
                     // console.log(res.data);

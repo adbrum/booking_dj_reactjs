@@ -1,9 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+def id_user (request):
+    id = User.objects.get(pk = request.user.id)
+    return id
+
 class Booking(models.Model):
     name = models.CharField(max_length=100)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.IntegerField()
     date = models.DateField()
     description = models.TextField()
     created_at = models.DateTimeField('criado em', auto_now_add=True)
