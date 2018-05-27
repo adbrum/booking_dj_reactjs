@@ -30,10 +30,8 @@ class Home extends Component {
             method: "post",
             url: "/login/",
             data: {
-
                 username: username,
                 password: password,
-
             },
         })
             .then(res => {
