@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Route, Router, Switch} from 'react-router-dom'
+import axios from "axios/index";
 import Home from "./Home";
 import Bookings from "./Bookings";
 import Booking from "./Booking";
@@ -9,12 +10,24 @@ import Success from "./Success";
 
 class App extends Component {
 
+    handleLogout = () => {
+        axios({
+            method: "post",
+            url: "/api-auth/logout/",
+        })
+            .then(res => {
+                console.log('RESPONSE: ', res)
+            })
+            .catch(err => {
+                console.log('ERRO: ', err)
+            })
+    }
 
     render() {
         return (
             <Router history={history}>
                 <div className="container">
-                    <NavigationItems/>
+                    <NavigationItems onClick={this.handleLogout}/>
                     <hr/>
                     <Switch>
                         <Route exact path='/' component={Home}/>

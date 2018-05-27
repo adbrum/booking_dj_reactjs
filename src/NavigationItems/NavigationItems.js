@@ -14,8 +14,11 @@ const navigationItems = (props) => (
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/booking">Agendar</Link></li>
                 <li><Link to="/bookings">Agendamentos</Link></li>
+                <li><Link to="/" onClick={props.onClick}>Logout</Link></li>
             </ul>
+
         </div>
+
     </nav>
 )
 
