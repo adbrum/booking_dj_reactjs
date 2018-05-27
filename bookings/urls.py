@@ -5,7 +5,6 @@ from bookings import views
 app_name= 'bookings'
 
 urlpatterns = [
-    path('booking/login/', views.signup, name='login'),
     path('booking/', views.index, name='index'),
     path('bookings/<int:pk>', views.details, name='details'),
     path('booking/<int:pk>', views.detail, name='detail'),

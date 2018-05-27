@@ -74,7 +74,7 @@ class DetailBooking extends Component {
                 details: details
             })
 
-            axios.post(`/bookings/${id}`, detail)
+            axios.post(`/booking/${id}`, detail)
                 .then(res => {
                     //console.log(res);
                     //console.log(res.data);

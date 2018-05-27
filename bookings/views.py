@@ -59,7 +59,8 @@ def index(request):
     return JsonResponse(list(_all), safe=False)
 
 def detail(request, pk):
-    print('XXXXX: ', request.user.is_authenticated)
+    print('XXXXX: ', request.POST)
+    print('XXXXX: ', pk)
     bookings = list()
     detail = Booking.objects.get(pk=pk)
     bookings.append({
@@ -84,9 +85,7 @@ def details(request, pk):
 # @api_view(['POST'])
 # @permission_classes([AllowAny])
 def create(request):
-    print('XXXXX: ', request.user.id)
     data = json.loads(request.body.decode('utf-8'))
-    print('XXXXXX: ', data)
     if request.method == 'POST':
         bookings = []
         booking = Booking(
@@ -110,7 +109,6 @@ def create(request):
         return JsonResponse(bookings, safe=False)
 
 
-@csrf_exempt
 def delete(request, pk):
     if request.method == 'DELETE':
         entry = get_object_or_404(Booking, pk=pk)
@@ -151,15 +149,4 @@ def delete(request, pk):
 
 #
 #
-def signup(request):
-
-    data = json.loads(request.body.decode('utf-8'))
-    username = data['username']
-    password = data['password']
-    user = authenticate(request, username=username, password=password)
-    if user is not None:
-        login(request, user)
-        print('XXXXX: ', request.user.is_authenticated)
-        return JsonResponse({"true": "true"}, safe=False)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
 
