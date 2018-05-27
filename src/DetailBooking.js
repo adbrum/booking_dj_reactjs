@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import api from "./api";
 import {Link, Redirect, Route} from 'react-router-dom'
 import Success from "./Success";
 import axios from 'axios'

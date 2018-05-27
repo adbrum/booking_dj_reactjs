@@ -1,9 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-def id_user (request):
-    id = User.objects.get(pk = request.user.id)
-    return id
 
 class Booking(models.Model):
     name = models.CharField(max_length=100)

@@ -1,10 +1,8 @@
 import React, {Component} from 'react'
-import api from './api'
 import axios from 'axios'
 
 import {Route} from "react-router-dom";
 import Success from "./Success";
-import $ from 'jquery';
 
 class Booking extends Component {
     constructor(props) {
