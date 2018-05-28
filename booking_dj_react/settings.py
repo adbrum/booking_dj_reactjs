@@ -152,5 +152,5 @@ CSRF_COOKIE_NAME = "csrftoken"
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
+    'localhost:3000', 'https://bookingexpress.herokuapp.com'
 )
