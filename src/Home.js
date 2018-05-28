@@ -33,13 +33,17 @@ class Home extends Component {
                 username: username,
                 password: password,
             },
+            headers: {
+                'Access-Control-Allow-Origin': '*'
+            }
         })
             .then(res => {
                 console.log('RESPONSE: ', res)
                 axios({
                         method: "get",
-                        url: "http://localhost:8000/api/",
+                        url: "/api/",
                     },
+
                 )
                     .then(res => {
                         console.log('RSPONSE: ', res)
