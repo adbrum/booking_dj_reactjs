@@ -1,1 +1,1 @@
-web: gunicorn booking_dj_ractjs.wsgi --log-file -
+web: gunicorn index:server
