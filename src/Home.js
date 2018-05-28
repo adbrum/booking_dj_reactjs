@@ -43,7 +43,6 @@ class Home extends Component {
                         method: "get",
                         url: "/api/",
                     },
-
                 )
                     .then(res => {
                         console.log('RSPONSE: ', res)
