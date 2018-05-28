@@ -12,7 +12,7 @@ import os
 from django.core.wsgi import get_wsgi_application
 from whitenoise.django import DjangoWhiteNoise
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "booking_dj_reactjs.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "booking_dj_react.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
