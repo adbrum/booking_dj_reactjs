@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import {Route} from "react-router-dom";
 import Success from "./Success";
-import Selectable from "./BigCalendar";
+import Event from "./BigCalendar";
 
 class Booking extends Component {
     constructor(props) {
@@ -71,7 +71,7 @@ class Booking extends Component {
         }
         return (
             <div>
-                <Selectable/>
+                <Event/>
                 {/*<h2>Adicionar nova marcação</h2>
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
