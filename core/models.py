@@ -15,3 +15,11 @@ class Booking(models.Model):
 
     def short_description(self):
         return self.description[:15]
+
+class Event(models.Model):
+    title = models.CharField(max_length=100)
+    start = models.CharField(max_length=11)
+    end = models.CharField(max_length=11)
+
+    def __str__(self):
+        return self.title

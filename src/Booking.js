@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import {Route} from "react-router-dom";
 import Success from "./Success";
+import Selectable from "./BigCalendar";
 
 class Booking extends Component {
     constructor(props) {
@@ -70,7 +71,8 @@ class Booking extends Component {
         }
         return (
             <div>
-                <h2>Adicionar nova marcação</h2>
+                <Selectable/>
+                {/*<h2>Adicionar nova marcação</h2>
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>
@@ -90,7 +92,7 @@ class Booking extends Component {
                                 className="btn btn-primary">Cancelar
                         </button>
                     </div>
-                </form>
+                </form>*/}
             </div>
         )
     }

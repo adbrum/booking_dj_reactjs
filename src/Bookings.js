@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link, Route} from 'react-router-dom'
+import {Link, Redirect, Route} from 'react-router-dom'
 import axios from 'axios'
 import DetailBooking from "./DetailBooking";
 
@@ -17,7 +17,7 @@ class Bookings extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/bookings/1`)
+        axios.get(`/bookings/${this.props.user}`)
             .then(res => {
                 const bookings = res.data
                 // console.log(bookings)
@@ -56,7 +56,6 @@ class Bookings extends Component {
                     })}
                 </div>
                 }
-
                 <Route exact path={`/bookings/booking/:idBooking`}
                        render={(props) => <DetailBooking toggleDiv={this.toggleDiv} {...props}/>}/>
             </div>
