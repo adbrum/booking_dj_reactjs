@@ -28,6 +28,7 @@ def api_login(request):
         # return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
@@ -42,8 +43,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    
-    
+
+
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.filter().order_by('-created_at')
     serializer_class = BookingSerializer
@@ -59,6 +60,7 @@ def index(request):
     # a = json.dumps(_all)
     print(_all)
     return JsonResponse(list(_all), safe=False)
+
 
 def detail(request, pk):
     print('XXXXX: ', request.POST)
@@ -89,26 +91,18 @@ def details(request, pk):
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
     if request.method == 'POST':
-        bookings = []
-        booking = Booking(
-            name=data['name'],
+        booking = Event(
             author=data['author'],
-            date=data['date'],
-            description=data['description']
+            title=data['title'],
+            start=data['start'],
+            end=data['end']
         )
 
         booking.save()
 
-        detail = Booking.objects.get(pk=booking.pk)
-        bookings.append({
-            "id": detail.id,
-            "author": detail.author,
-            "name": detail.name,
-            "date": detail.date,
-            "description": detail.description
-        })
+        details = Event.objects.filter(author=data['author']).values()
 
-        return JsonResponse(bookings, safe=False)
+        return JsonResponse(list(details), safe=False)
 
 
 def delete(request, pk):
@@ -151,4 +145,3 @@ def delete(request, pk):
 
 #
 #
-
