@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from bookings.serialyzers import UserSerializer, GroupSerializer, BookingSerializer
-from core.models import Booking
+from core.models import Booking, Event
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets, status
@@ -79,7 +79,7 @@ def detail(request, pk):
 # @csrf_exempt
 def details(request, pk):
     print('XXXXX: ', request.user.is_authenticated)
-    details = Booking.objects.filter(author=pk).values()
+    details = Event.objects.filter(author=pk).values()
 
     return JsonResponse(list(details), safe=False)
 

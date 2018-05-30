@@ -16,6 +16,20 @@ class Booking extends Component {
 
         this.addBooking = this.addBooking.bind(this)
         this.cancelBooking = this.cancelBooking.bind(this)
+        this.addEvent = this.addEvent.bind(this)
+    }
+
+    componentDidMount() {
+        // axios.get(`/bookings/${this.props.user}`)
+        axios.get(`/bookings/1`)
+            .then(res => {
+                const bookings = res.data
+                console.log('BOOKINGS: ', bookings)
+                this.setState({bookings: bookings})
+            })
+            .catch(err => {
+                console.log(err.response)
+            })
     }
 
     addBooking = (event) => {
@@ -58,6 +72,11 @@ class Booking extends Component {
         }
     }
 
+    addEvent = (event, data) => {
+        event.preventDefault()
+        console.log(data)
+    }
+
     cancelBooking = (event) => {
         event.preventDefault()
         this.refs.form_bookings.reset()
@@ -67,11 +86,12 @@ class Booking extends Component {
     render() {
         if (this.state.redirect === 'success') {
             // return <Route render={() => (<Redirect to="/success" data={this.state.bookings}/>)} />
-            return <Route render={(props) => <Success data={this.state.bookings} {...props}/>}/>
+            return <Route render={(props) => <Success data={this.state.bookings} {...props} format={(value, name) => value === '' ? null : value}/>}/>
         }
         return (
             <div>
-                <Event/>
+                {/*{JSON.stringify(this.state.bookings)}*/}
+                <Route render={(props) => <Event data={this.state.bookings} {...props}/>}/>
                 {/*<h2>Adicionar nova marcação</h2>
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
