@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
@@ -61,7 +62,7 @@ def index(request):
     print(_all)
     return JsonResponse(list(_all), safe=False)
 
-
+@login_required
 def detail(request, pk):
     print('XXXXX: ', request.POST)
     print('XXXXX: ', pk)
@@ -78,7 +79,7 @@ def detail(request, pk):
     return JsonResponse(bookings, safe=False)
 
 
-# @csrf_exempt
+@login_required
 def details(request, pk):
     print('XXXXX: ', request.user.is_authenticated)
     details = Event.objects.filter(author=pk).values()
@@ -86,10 +87,10 @@ def details(request, pk):
     return JsonResponse(list(details), safe=False)
 
 
-# @api_view(['POST'])
-# @permission_classes([AllowAny])
+@login_required
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
+    print('XXXXXXXXXX: ', data)
     if request.method == 'POST':
         booking = Event(
             author=data['author'],
@@ -104,7 +105,7 @@ def create(request):
 
         return JsonResponse(list(details), safe=False)
 
-
+@login_required
 def delete(request, pk):
     if request.method == 'DELETE':
         entry = get_object_or_404(Booking, pk=pk)

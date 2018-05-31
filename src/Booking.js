@@ -33,40 +33,38 @@ class Booking extends Component {
     }
 
     addBooking = (data) => {
-        // if (this.refs.name.value !== '') {
-            let author = 1
-            let title = 'Teste Add!'
-            let start = data.start
-            let end = data.end
+        let author = 1
+        let title = data[0].title
+        let start = data[0].start
+        let end = data[0].end
 
-            let booking = {
-                author,
-                title,
-                start,
-                end,
-            }
+        let booking = {
+            author,
+            title,
+            start,
+            end,
+        }
 
-            let bookings = this.state.bookings
+        let bookings = this.state.bookings
 
-            bookings.push(booking)
+        bookings.push(booking)
 
-            this.setState({
-                bookings: bookings
+        this.setState({
+            bookings: bookings
+        })
+
+        axios.post(`/booking/create/`, booking)
+            .then(res => {
+                // console.log(res);
+                // console.log('XXXXXXXX: ',res.data);
+                this.setState({
+                    bookings: res.data,
+                    redirect: ''
+                })
             })
-
-            axios.post(`/booking/create/`, booking)
-                .then(res => {
-                    // console.log(res);
-                    console.log('XXXXXXXX: ',res.data);
-                    this.setState({
-                        bookings: res.data,
-                        redirect: ''
-                    })
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        // }
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     editBooking = (data) => {
@@ -81,12 +79,12 @@ class Booking extends Component {
     }
 
     render() {
-        if (this.state.redirect === 'success') {
+        /*if (this.state.redirect === 'success') {
             // return <Route render={() => (<Redirect to="/success" data={this.state.bookings}/>)} />
             return <Route render={(props) => <Success data={this.state.bookings}
                                                       {...props}
                                                       format={(value, name) => value === '' ? null : value}/>}/>
-        }
+        }*/
         return (
             <div>
                 {/*{JSON.stringify(this.state.bookings)}*/}
