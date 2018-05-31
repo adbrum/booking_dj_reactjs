@@ -11,7 +11,8 @@ class Booking extends Component {
 
         this.state = {
             bookings: [],
-            redirect: ''
+            redirect: '',
+            type: 'save'
         }
 
         this.addBooking = this.addBooking.bind(this)
@@ -24,7 +25,7 @@ class Booking extends Component {
         axios.get(`/bookings/1`)
             .then(res => {
                 const bookings = res.data
-                // console.log('BOOKINGS: ', bookings)
+                console.log('BOOKINGS: ', bookings)
                 this.setState({bookings: bookings})
             })
             .catch(err => {
@@ -68,6 +69,7 @@ class Booking extends Component {
     }
 
     editBooking = (data) => {
+        this.setState({type: 'edit'})
         console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: ', data)
     }
 
@@ -90,7 +92,7 @@ class Booking extends Component {
                 {/*{JSON.stringify(this.state.bookings)}*/}
                 <Route render={(props) => <Event data={this.state.bookings}
                                                  addBooking={(data) => this.addBooking(data)}
-                                                 editEvent={(data) => this.editBooking(data)}
+                                                 editBooking={(data) => this.editBooking(data)}
                                                  {...props}/>}/>
             </div>
         )

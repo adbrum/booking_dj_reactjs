@@ -67,13 +67,13 @@ def detail(request, pk):
     print('XXXXX: ', request.POST)
     print('XXXXX: ', pk)
     bookings = list()
-    detail = Booking.objects.get(pk=pk)
+    detail = Event.objects.get(pk=pk)
     bookings.append({
         "id": detail.id,
         "author": 1,
-        "name": detail.name,
-        "date": detail.date,
-        "description": detail.description
+        "title": detail.title,
+        "start": detail.start,
+        "end": detail.end
     })
 
     return JsonResponse(bookings, safe=False)
@@ -90,7 +90,6 @@ def details(request, pk):
 @login_required
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
-    print('XXXXXXXXXX: ', data)
     if request.method == 'POST':
         booking = Event(
             author=data['author'],
@@ -98,7 +97,6 @@ def create(request):
             start=data['start'],
             end=data['end']
         )
-
         booking.save()
 
         details = Event.objects.filter(author=data['author']).values()

@@ -4,18 +4,19 @@ import Modal from './modal.js';
 class List extends Component {
     constructor(props) {
         super(props);
-
-        this.replaceModalItem = this.replaceModalItem.bind(this);
-        this.saveModalDetails = this.saveModalDetails.bind(this);
         this.state = {
             requiredItem: 0,
             brochure: [
                 {
-                    title: "Título",
-                    msg: "Observações",
+                    title: this.props.title,
+                    msg: this.props.msg,
                 }
             ]
         }
+
+        this.replaceModalItem = this.replaceModalItem.bind(this);
+        this.saveModalDetails = this.saveModalDetails.bind(this);
+        this.editModalDetails = this.editModalDetails.bind(this);
     }
 
     replaceModalItem(index) {
@@ -29,14 +30,15 @@ class List extends Component {
         let tempbrochure = this.state.brochure;
         tempbrochure[requiredItem] = item;
         this.setState({brochure: tempbrochure});
-
-        tempbrochure = {'reste':'sdfadsfasd'}
-
-        //  this.setState({
-        //     brochure : {start : this.props.start}
-        // })
-
         this.props.addBooking(this.state.brochure)
+    }
+
+    editModalDetails(item) {
+        const requiredItem = this.state.requiredItem;
+        let tempbrochure = this.state.brochure;
+        tempbrochure[requiredItem] = item;
+        this.setState({brochure: tempbrochure});
+        this.props.editBooking(this.state.brochure)
     }
 
     deleteItem(index) {
@@ -48,15 +50,22 @@ class List extends Component {
     render() {
         const brochure = this.state.brochure.map((item, index) => {
             return (
-
                 <tr key={index}>
                     <td>{item.title}</td>
                     <td>{" "} - {" "}</td>
                     <td>{item.msg}</td>
                     <td>
+                        {this.props.type === 'save' &&
                         <button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                                onClick={() => this.replaceModalItem(index)}>edit
+                                onClick={() => this.replaceModalItem(index)}>Novo
                         </button>
+                        }
+                        {this.props.type === 'edit' &&
+                        <button className="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                                onClick={() => this.replaceModalItem(index)}>editar
+                        </button>
+                        }
+
                         {" "}
                         <button className="btn btn-danger" onClick={() => this.deleteItem(index)}>remove</button>
                     </td>
@@ -68,22 +77,27 @@ class List extends Component {
         let modalData = this.state.brochure[requiredItem];
         return (
             <div>
-                <div style={{textAlign: "center"}}>
-                    <h1>Editable Bootstrap Modal In React</h1>
-                    <h6>Bootstrap 4.0.0-beta.3</h6>
-                </div>
                 <table className="table table-striped">
                     <tbody>
                     {brochure}
                     </tbody>
                 </table>
+                {this.props.type === 'save' &&
                 <Modal
                     title={modalData.title}
                     msg={modalData.msg}
                     start={this.props.start}
                     end={this.props.end}
                     saveModalDetails={this.saveModalDetails}
-                />
+                />}
+                {this.props.type === 'edit' &&
+                <Modal
+                    title={modalData.title}
+                    msg={modalData.msg}
+                    start={this.props.start}
+                    end={this.props.end}
+                    saveModalDetails={this.editModalDetails}
+                />}
             </div>
         );
     }

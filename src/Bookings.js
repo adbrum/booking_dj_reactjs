@@ -17,10 +17,11 @@ class Bookings extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/bookings/${this.props.user}`)
+        // axios.get(`/bookings/${this.props.user}`)
+        axios.get(`/bookings/1`)
             .then(res => {
                 const bookings = res.data
-                // console.log(bookings)
+                console.log(bookings)
                 this.setState({bookings: bookings})
             })
             .catch(err => {
