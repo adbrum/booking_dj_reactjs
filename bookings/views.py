@@ -64,8 +64,6 @@ def index(request):
 
 @login_required
 def detail(request, pk):
-    print('XXXXX: ', request.POST)
-    print('XXXXX: ', pk)
     bookings = list()
     detail = Event.objects.get(pk=pk)
     bookings.append({
@@ -81,7 +79,6 @@ def detail(request, pk):
 
 @login_required
 def details(request, pk):
-    print('XXXXX: ', request.user.is_authenticated)
     details = Event.objects.filter(author=pk).values()
 
     return JsonResponse(list(details), safe=False)
@@ -102,6 +99,20 @@ def create(request):
         details = Event.objects.filter(author=data['author']).values()
 
         return JsonResponse(list(details), safe=False)
+
+@login_required
+def edit(request, pk):
+    data = json.loads(request.body.decode('utf-8'))
+    print('DATA: ', data)
+    print('DATA: ', data['title'])
+    booking = Event.objects.get(pk=pk)
+    booking.title = data['title']
+    # booking.title = data['msg']
+    booking.save()
+
+    details = Event.objects.filter(author=data['author']).values()
+
+    return JsonResponse(list(details), safe=False)
 
 @login_required
 def delete(request, pk):

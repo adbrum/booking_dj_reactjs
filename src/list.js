@@ -37,6 +37,8 @@ class List extends Component {
         const requiredItem = this.state.requiredItem;
         let tempbrochure = this.state.brochure;
         tempbrochure[requiredItem] = item;
+        tempbrochure.push({'id': this.props.id})
+        console.log('CCCC: ', tempbrochure)
         this.setState({brochure: tempbrochure});
         this.props.editBooking(this.state.brochure)
     }

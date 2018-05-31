@@ -22,6 +22,7 @@ class Event extends Component {
         super(props)
         this.state = {
             events: [],
+            id: '',
             title: '',
             msg: '',
             start: '',
@@ -62,6 +63,7 @@ class Event extends Component {
             })
 
         this.setState({
+            id: event.id,
             type: 'edit',
             title: event.title,
             msg: 'Teste teste',
@@ -76,6 +78,7 @@ class Event extends Component {
     }
 
     editBooking = (data) => {
+        console.log('XXXX DATA XXXX: ', data)
         this.setState({type: 'edit'})
         this.props.editBooking(data)
         this.setState({showModal: false})
@@ -94,6 +97,7 @@ class Event extends Component {
                                                 start={this.state.start}
                                                 end={this.state.end}
                                                 type={this.state.type}
+                                                id={this.state.id}
                                                 title={this.state.title}
                                                 msg={this.state.msg}
                                                 addBooking={(data) => {

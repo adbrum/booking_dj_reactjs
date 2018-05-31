@@ -69,10 +69,23 @@ class Booking extends Component {
     }
 
     editBooking = (data) => {
+        console.log('##########: ', data)
         this.setState({type: 'edit'})
-        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: ', data)
-    }
+        axios.post(`/booking/edit/${data[1].id}`,
+            {
+               author: 1,
+               title: data[0].title,
+                msg: data[0].msg
+            })
+            .then(res => {
+                // console.log(res);
+                // console.log('XXXXXXXX: ',res.data);
+            })
+            .catch(err => {
+                console.log(err)
+            })
 
+    }
 
     cancelBooking = (event) => {
         event.preventDefault()
