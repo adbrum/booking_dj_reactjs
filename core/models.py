@@ -21,6 +21,7 @@ class Event(models.Model):
     author = models.IntegerField()
     start = models.DateTimeField()
     end = models.DateTimeField()
+    description = models.TextField(max_length=512)
     created_at = models.DateTimeField('criado em', auto_now_add=True)
     updated_at = models.DateTimeField('alterado em', auto_now=True)
 

@@ -39,34 +39,34 @@ class Event extends Component {
     onSlotChange = (slotInfo) => {
         let startDate = moment(slotInfo.start.toLocaleString()).format("YYYY-MM-DD HH:mm:ss");
         let endDate = moment(slotInfo.end.toLocaleString()).format("YYYY-MM-DD HH:mm:ss");
-        // console.log('startTimetartDate', startDate)
-        // console.log('endTimendDate', endDate)
 
         this.setState({
+            type: 'save',
+            title: '',
+            msg: '',
             start: startDate,
-            end: endDate
+            end: endDate,
+            showModal: true
         })
-
-        this.setState({showModal: true})
     }
 
     onEventClick = (event) => {
         console.log('EVENT: ', event['id'])
-        axios.get(`/booking/${event.id}`)
-            .then(res => {
-                const booking = res.data
-                console.log('EVENTO: ', booking)
-                // this.setState({bookings: bookings})
-            })
-            .catch(err => {
-                console.log(err.response)
-            })
+        // axios.get(`/booking/${event.id}`)
+        //     .then(res => {
+        //         const booking = res.data
+        //         console.log('EVENTO: ', booking)
+        //         // this.setState({bookings: bookings})
+        //     })
+        //     .catch(err => {
+        //         console.log(err.response)
+        //     })
 
         this.setState({
             id: event.id,
             type: 'edit',
             title: event.title,
-            msg: 'Teste teste',
+            msg: event.description,
             showModal: true
         })
     }
@@ -78,10 +78,19 @@ class Event extends Component {
     }
 
     editBooking = (data) => {
-        console.log('XXXX DATA XXXX: ', data)
-        this.setState({type: 'edit'})
         this.props.editBooking(data)
-        this.setState({showModal: false})
+        this.setState({
+            type: 'edit',
+            showModal: false
+        })
+    }
+
+    deleteBooking = (data) => {
+        this.props.deleteBooking(data)
+        this.setState({
+            type: 'edit',
+            showModal: false
+        })
     }
 
     render() {
@@ -105,6 +114,9 @@ class Event extends Component {
                                                 }}
                                                 editBooking={(data) => {
                                                     this.editBooking(data)
+                                                }}
+                                                deleteBooking={(data) => {
+                                                    this.deleteBooking(data)
                                                 }}
                                                 {...props}/>}/>
                 }

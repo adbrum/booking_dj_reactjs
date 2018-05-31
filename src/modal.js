@@ -40,14 +40,14 @@ class Modal extends Component {
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Edit Jewel</h5>
+                            <h5 className="modal-title" id="exampleModalLabel">Dados da marcação</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p><span className="modal-lable">Title:</span><input value={this.state.title} onChange={(e) => this.titleHandler(e)} /></p>
-                            <p><span className="modal-lable">Msg:</span><input value={this.state.msg} onChange={(e) => this.msgHandler(e)} /></p>
+                            <p><span className="modal-lable">Title:</span><input className="input-groupp" value={this.state.title} onChange={(e) => this.titleHandler(e)} /></p>
+                            <p><span className="modal-lable">Msg:</span><textarea className="input-group" value={this.state.msg} onChange={(e) => this.msgHandler(e)} /></p>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

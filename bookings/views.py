@@ -91,6 +91,7 @@ def create(request):
         booking = Event(
             author=data['author'],
             title=data['title'],
+            description=data['description'],
             start=data['start'],
             end=data['end']
         )
@@ -103,11 +104,10 @@ def create(request):
 @login_required
 def edit(request, pk):
     data = json.loads(request.body.decode('utf-8'))
-    print('DATA: ', data)
-    print('DATA: ', data['title'])
+    print('DATA: ', data['description'])
     booking = Event.objects.get(pk=pk)
     booking.title = data['title']
-    # booking.title = data['msg']
+    booking.description = data['description']
     booking.save()
 
     details = Event.objects.filter(author=data['author']).values()
@@ -116,20 +116,14 @@ def edit(request, pk):
 
 @login_required
 def delete(request, pk):
-    if request.method == 'DELETE':
-        entry = get_object_or_404(Booking, pk=pk)
+    data = json.loads(request.body.decode('utf-8'))
+    if request.method == 'POST':
+        entry = get_object_or_404(Event, pk=pk)
         entry.delete()
-        return JsonResponse({"true": "true"}, safe=False)
 
-# def calendar(request):
-#     today = date.today()
-#     new_end = date.today()
-#     # bookings = Booking.objects.filter(author=request.user, date__gte=today)
-#     bookings = Booking.objects.filter(date__gte=today)
-#     # print(datetime.today().strftime('%d-%m-%Y'))
-#     print(today)
-#
-#     return render(request, 'bookings/calendar.html', {'bookings': bookings})
+        details = Event.objects.filter(author=data['author']).values()
+
+        return JsonResponse(list(details), safe=False)
 
 
 # def booking_create(request):
