@@ -64,7 +64,7 @@ def index(request):
 
 @login_required
 def details(request, pk):
-    details = Event.objects.filter(author=pk).values()
+    details = Event.objects.filter(author=pk, active=True).values()
 
     return JsonResponse(list(details), safe=False)
 
