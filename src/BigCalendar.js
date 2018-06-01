@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import BigCalendar from 'react-big-calendar-like-google'
 import moment from 'moment'
 import 'moment/locale/pt'
+// import 'react-big-calendar/lib/css/react-big-calendar.css'
 import 'react-big-calendar-like-google/lib/css/react-big-calendar.css'
 import List from "./list";
 // Scripts

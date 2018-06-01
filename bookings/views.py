@@ -58,8 +58,7 @@ class DetailsViewSet(viewsets.ModelViewSet):
 
 def index(request):
     _all = Booking.objects.all().values()
-    # a = json.dumps(_all)
-    print(_all)
+
     return JsonResponse(list(_all), safe=False)
 
 @login_required
@@ -97,7 +96,7 @@ def create(request):
         )
         booking.save()
 
-        details = Event.objects.filter(author=data['author']).values()
+        details = Event.objects.filter(author=data['author'], active=True).values()
 
         return JsonResponse(list(details), safe=False)
 
@@ -110,7 +109,7 @@ def edit(request, pk):
     booking.description = data['description']
     booking.save()
 
-    details = Event.objects.filter(author=data['author']).values()
+    details = Event.objects.filter(author=data['author'], active=True).values()
 
     return JsonResponse(list(details), safe=False)
 
@@ -119,9 +118,11 @@ def delete(request, pk):
     data = json.loads(request.body.decode('utf-8'))
     if request.method == 'POST':
         entry = get_object_or_404(Event, pk=pk)
-        entry.delete()
+        entry.active = False
+        # entry.delete()
+        entry.save()
 
-        details = Event.objects.filter(author=data['author']).values()
+        details = Event.objects.filter(author=data['author'], active=True).values()
 
         return JsonResponse(list(details), safe=False)
 
