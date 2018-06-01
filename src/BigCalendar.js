@@ -4,16 +4,13 @@ import BigCalendar from 'react-big-calendar-like-google'
 import moment from 'moment'
 import 'moment/locale/pt'
 import 'react-big-calendar-like-google/lib/css/react-big-calendar.css'
-import events from './events'
 import List from "./list";
-
 // Scripts
 import 'jquery/dist/jquery.min.js';
 import 'bootstrap/dist/js/bootstrap.min.js';
 // Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route} from "react-router-dom";
-import axios from "axios/index";
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
@@ -95,7 +92,7 @@ class Event extends Component {
 
     render() {
         this.props.data.map(item => {
-            item.start = new Date(item.start),
+            item.start = new Date(item.start)
                 item.end = new Date(item.end)
         })
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 
 class Modal extends Component {
     constructor(props) {
@@ -45,11 +45,17 @@ class Modal extends Component {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body">
-                            <p><span className="modal-lable">Title:</span><input className="input-groupp" value={this.state.title} onChange={(e) => this.titleHandler(e)} /></p>
-                            <p><span className="modal-lable">Msg:</span><textarea className="input-group" value={this.state.msg} onChange={(e) => this.msgHandler(e)} /></p>
+                        <div className="modal-body form-group">
+                            <p><span className="modal-lable">Título</span><input className="form-control"
+                                                                                 value={this.state.title}
+                                                                                 onChange={(e) => this.titleHandler(e)}/>
+                            </p>
+                            <p><span className="modal-lable">Descrição</span><textarea className="form-control"
+                                                                                       value={this.state.msg}
+                                                                                       onChange={(e) => this.msgHandler(e)}/>
+                            </p>
                         </div>
-                        <div className="modal-footer">
+                        <div className="modal-footer form-group">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => { this.handleSave() }}>Save changes</button>
                         </div>

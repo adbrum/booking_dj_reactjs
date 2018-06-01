@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link, Redirect, Route} from 'react-router-dom'
+import {Link, Route} from 'react-router-dom'
 import axios from 'axios'
 import DetailBooking from "./DetailBooking";
 
@@ -44,8 +44,8 @@ class Bookings extends Component {
                         return (
                             <div key={index}>
                                 <ul className="list-group">
-                                    <li className="list-group-item">Nome: {booking.name}</li>
-                                    <li className="list-group-item">Data: {booking.date}</li>
+                                    <li className="list-group-item">Nome: {booking.title}</li>
+                                    <li className="list-group-item">Data: {booking.start}</li>
                                     <li className="list-group-item">Descrição: {booking.description}</li>
                                     <li className="list-group-item">
                                         <Link onClick={this.toggleDiv} to={`/bookings/booking/${booking.id}`}
