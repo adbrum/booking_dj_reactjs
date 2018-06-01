@@ -61,6 +61,14 @@ def index(request):
 
     return JsonResponse(list(_all), safe=False)
 
+
+@login_required
+def details(request, pk):
+    details = Event.objects.filter(author=pk).values()
+
+    return JsonResponse(list(details), safe=False)
+
+
 @login_required
 def detail(request, pk):
     bookings = list()
@@ -74,14 +82,6 @@ def detail(request, pk):
     })
 
     return JsonResponse(bookings, safe=False)
-
-
-@login_required
-def details(request, pk):
-    details = Event.objects.filter(author=pk).values()
-
-    return JsonResponse(list(details), safe=False)
-
 
 @login_required
 def create(request):
