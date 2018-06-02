@@ -1,20 +1,18 @@
 import json
+from datetime import date
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from bookings.serialyzers import UserSerializer, GroupSerializer, BookingSerializer
 from core.models import Booking, Event
-
-from django.contrib.auth.models import User, Group
-from rest_framework import viewsets, status
 
 
 @api_view(['POST'])
@@ -23,10 +21,11 @@ def api_login(request):
     username = request.data['username']
     password = request.data['password']
     user = authenticate(request, username=username, password=password)
+
     if user is not None:
         login(request, user)
         return JsonResponse({"user": user.pk})
-        # return Response(status=status.HTTP_200_OK)
+
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -65,6 +64,25 @@ def index(request):
 @login_required
 def details(request, pk):
     details = Event.objects.filter(author=pk, active=True).values()
+
+    return JsonResponse(list(details), safe=False)
+
+
+@login_required
+def details_today(request, pk):
+
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        start_date = data['start_date']
+        end_date = data['end_date']
+        details = Event.objects.filter(author=pk, start__date__range=(start_date, end_date)).values()
+        print('DETAILS: ', type(details))
+
+        return JsonResponse(list(details), safe=False)
+
+    today = date.today()
+    print('XXXXXXXXX: ', today)
+    details = Event.objects.filter(author=pk, start__date=today, active=True).values()
 
     return JsonResponse(list(details), safe=False)
 
@@ -125,28 +143,3 @@ def delete(request, pk):
         details = Event.objects.filter(author=data['author'], active=True).values()
 
         return JsonResponse(list(details), safe=False)
-
-
-# def booking_create(request):
-#     data = dict()
-#     if request.method == 'POST':
-#         form = BookingForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             # data['form_is_valid'] = True
-#         else:
-#             data['form_is_valid'] = False
-#     else:
-#         form = BookingForm()
-#
-#     context = {'form': form}
-#     data['html_form'] = render_to_string('bookings/partial_book_create.html',
-#                                          context,
-#                                          request=request)
-#     # return JsonResponse(data)
-#     return render(request, 'bookings/partial_book_create.html', {'form': form})
-#
-#
-
-#
-#

@@ -14,8 +14,10 @@
     "react-big-calendar-like-google": "0.0.3",
     "react-dom": "^16.4.0",
     "react-modal": "^3.4.4",
+    "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
+    "redux": "^4.0.0",
     "simple-react-modal": "^0.5.1"
   },
   "scripts": {
