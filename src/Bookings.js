@@ -2,6 +2,11 @@ import React, {Component} from 'react'
 import {Link, Route} from 'react-router-dom'
 import axios from 'axios'
 import DetailBooking from "./DetailBooking";
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 class Bookings extends Component {
     constructor(props) {
@@ -10,7 +15,10 @@ class Bookings extends Component {
         this.state = {
             bookings: [],
             detail: [],
-            show: true
+            show: true,
+            startDate: moment(),
+            endDate: moment()
+
         }
 
         this.toggleDiv = this.toggleDiv.bind(this)
@@ -27,13 +35,30 @@ class Bookings extends Component {
             .catch(err => {
                 console.log(err.response)
             })
+
     }
+
+    handleChangeStart = (date) => {
+        this.setState({
+            startDate: date
+        })
+    }
+
+    handleChangeEnd = (date) => {
+        this.setState({
+            endDate: date
+        })
+    }
+
 
     datesHandle = (event) => {
         event.preventDefault()
 
-        let start_date = this.refs.start_date.value
-        let end_date = this.refs.end_date.value
+        // let start_date = this.refs.start_date.value
+        // let end_date = this.refs.end_date.value
+        let start_date = this.state.startDate
+        let end_date = this.state.endDate
+
 
         axios({
             method: "post",
@@ -64,20 +89,34 @@ class Bookings extends Component {
 
     render() {
         return (
-            <div>
-                <div className="col-xs-8 form-group">
-                        <label htmlFor="">Data inicio</label>
-                        <input type="text" ref="start_date" placeholder="Inicio" className="form-control"/>
+            <div className="container">
+                <div className="col-md-4 form-group">
+                    <label htmlFor="">Data inicio</label>
+                    <DatePicker
+                        defaultText="Data inicio"
+                        todayButton={"Vandaag"}
+                        dateFormat="DD/MM/YYYY"
+                        selected={this.state.startDate}
+                        onChange={this.handleChangeStart}
+                        className="form-control"
+                    />
 
-                        <label htmlFor="">Data fim</label>
-                        <input type="text" ref="end_date" placeholder="Fim" className="form-control"/>
-                    <hr/>
-                        <button type="submit" onClick={(e) => this.datesHandle(e)} className="btn btn-primary">Enviar
-                        </button>
-                    </div>
+                    <label htmlFor="">Data fim</label>
+                    <DatePicker
+                        defaultText="Data fim"
+                        todayButton={"Vandaag"}
+                        dateFormat="DD/MM/YYYY"
+                        selected={this.state.endDate}
+                        onChange={this.handleChangeEnd}
+                        className="form-control"
+                    />
+                    <br />
+                    <button type="submit" onClick={(e) => this.datesHandle(e)} className="btn btn-primary">Enviar
+                    </button>
+                </div>
                 <hr/>
                 {this.state.show &&
-                <div className="col-xs-6 form-group">
+                <div className="col-md-8 form-group">
                     {this.state.bookings.map((booking, index) => {
                         return (
                             <div key={index}>

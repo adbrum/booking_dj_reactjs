@@ -1,5 +1,6 @@
+import datetime
 import json
-from datetime import date
+
 
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -70,18 +71,15 @@ def details(request, pk):
 
 @login_required
 def details_today(request, pk):
-
     if request.method == 'POST':
         data = json.loads(request.body.decode('utf-8'))
-        start_date = data['start_date']
-        end_date = data['end_date']
+        start_date = data['start_date'][:10]
+        end_date = data['end_date'][:10]
         details = Event.objects.filter(author=pk, start__date__range=(start_date, end_date)).values()
-        print('DETAILS: ', type(details))
 
         return JsonResponse(list(details), safe=False)
 
-    today = date.today()
-    print('XXXXXXXXX: ', today)
+    today = datetime.date.today()
     details = Event.objects.filter(author=pk, start__date=today, active=True).values()
 
     return JsonResponse(list(details), safe=False)
