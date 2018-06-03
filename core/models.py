@@ -22,6 +22,8 @@ class Event(models.Model):
     start = models.DateTimeField()
     end = models.DateTimeField()
     description = models.TextField(max_length=512)
+    hex_color = models.CharField(max_length=10, blank=True)
+    status = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
     created_at = models.DateTimeField('criado em', auto_now_add=True)
     updated_at = models.DateTimeField('alterado em', auto_now=True)

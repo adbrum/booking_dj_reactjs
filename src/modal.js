@@ -8,7 +8,9 @@ class Modal extends Component {
             title: '',
             msg: '',
             start: '',
-            end: ''
+            end: '',
+            status: '',
+            hex_color: ''
         }
     }
 
@@ -17,16 +19,26 @@ class Modal extends Component {
             title: nextProps.title,
             msg: nextProps.msg,
             start: this.props.start,
-            end: this.props.end
+            end: this.props.end,
+            status: this.props.status,
+            hex_color: this.props.hex_color
         });
     }
 
     titleHandler(e) {
-        this.setState({ title: e.target.value });
+        this.setState({title: e.target.value});
     }
 
     msgHandler(e) {
-        this.setState({ msg: e.target.value });
+        this.setState({msg: e.target.value});
+    }
+
+    statusHandler(e) {
+        console.log('ESTATUS: ', e.target.checked)
+        this.setState({
+            status: e.target.checked,
+            hex_color: '006600',
+        });
     }
 
     handleSave() {
@@ -36,7 +48,8 @@ class Modal extends Component {
 
     render() {
         return (
-            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -54,10 +67,17 @@ class Modal extends Component {
                                                                                        value={this.state.msg}
                                                                                        onChange={(e) => this.msgHandler(e)}/>
                             </p>
+                            <p><span className="modal-lable">Presente</span>
+                                <input className="checkbox" ref="status" type="checkbox" checked={this.state.status}
+                                       onChange={(e) => this.statusHandler(e)}/>
+                            </p>
                         </div>
                         <div className="modal-footer form-group">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => { this.handleSave() }}>Save changes</button>
+                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={() => {
+                                this.handleSave()
+                            }}>Save changes
+                            </button>
                         </div>
                     </div>
                 </div>

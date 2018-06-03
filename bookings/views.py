@@ -102,6 +102,7 @@ def detail(request, pk):
 @login_required
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
+    print('CREATE: ', data)
     if request.method == 'POST':
         booking = Event(
             author=data['author'],
@@ -119,10 +120,14 @@ def create(request):
 @login_required
 def edit(request, pk):
     data = json.loads(request.body.decode('utf-8'))
-    print('DATA: ', data['description'])
+    print('DATA: ', data)
+    print('STATUS: ', data['status'])
+    print('HEXCOLOR: ', data['hex_color'])
     booking = Event.objects.get(pk=pk)
     booking.title = data['title']
     booking.description = data['description']
+    booking.status = data['status']
+    booking.hex_color = data['hex_color']
     booking.save()
 
     details = Event.objects.filter(author=data['author'], active=True).values()

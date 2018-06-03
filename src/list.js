@@ -37,7 +37,10 @@ class List extends Component {
         const requiredItem = this.state.requiredItem;
         let tempbrochure = this.state.brochure;
         tempbrochure[requiredItem] = item;
-        tempbrochure.push({'id': this.props.id})
+        tempbrochure.push({
+            'id': this.props.id,
+            'status': this.props.status,
+        })
         this.setState({brochure: tempbrochure});
         this.props.editBooking(this.state.brochure)
     }
@@ -67,9 +70,9 @@ class List extends Component {
                                 onClick={() => this.replaceModalItem(index)}>editar
                         </button>
                         }
-
                         {" "}
                         <button className="btn btn-danger" onClick={() => this.deleteItem(index)}>remove</button>
+                        {" "}
                     </td>
                 </tr>
             )
@@ -90,6 +93,7 @@ class List extends Component {
                     msg={modalData.msg}
                     start={this.props.start}
                     end={this.props.end}
+                    status={this.props.status}
                     saveModalDetails={this.saveModalDetails}
                 />}
                 {this.props.type === 'edit' &&
@@ -98,6 +102,7 @@ class List extends Component {
                     msg={modalData.msg}
                     start={this.props.start}
                     end={this.props.end}
+                    status={this.props.status}
                     saveModalDetails={this.editModalDetails}
                 />}
             </div>

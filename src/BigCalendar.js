@@ -25,13 +25,15 @@ class Event extends Component {
             msg: '',
             start: '',
             end: '',
-            type: 'save'
+            type: 'save',
+            status: ''
         }
 
         this.onSlotChange = this.onSlotChange.bind(this)
         this.onEventClick = this.onEventClick.bind(this)
         this.addBooking = this.addBooking.bind(this)
         this.editBooking = this.editBooking.bind(this)
+        this.eventStyleGetter = this.eventStyleGetter.bind(this)
     }
 
     onSlotChange = (slotInfo) => {
@@ -49,22 +51,12 @@ class Event extends Component {
     }
 
     onEventClick = (event) => {
-        console.log('EVENT: ', event['id'])
-        // axios.get(`/booking/${event.id}`)
-        //     .then(res => {
-        //         const booking = res.data
-        //         console.log('EVENTO: ', booking)
-        //         // this.setState({bookings: bookings})
-        //     })
-        //     .catch(err => {
-        //         console.log(err.response)
-        //     })
-
         this.setState({
             id: event.id,
             type: 'edit',
             title: event.title,
             msg: event.description,
+            status: event.status,
             showModal: true
         })
     }
@@ -91,10 +83,33 @@ class Event extends Component {
         })
     }
 
+    eventStyleGetter = (event, start, end, isSelected) => {
+        if (event.hex_color) {
+            let backgroundColor = '#' + event.hex_color;
+            let style = {
+                backgroundColor: backgroundColor,
+                borderRadius: '5px',
+                opacity: 0.8,
+                color: '#fff',
+                border: '1px',
+                display: 'block'
+            };
+            return {
+                style: style
+            };
+
+        }
+        let style = {}
+        return {
+            style: style
+        };
+
+    }
+
     render() {
         this.props.data.map(item => {
             item.start = new Date(item.start)
-                item.end = new Date(item.end)
+            item.end = new Date(item.end)
         })
 
         return (
@@ -107,6 +122,7 @@ class Event extends Component {
                                                 id={this.state.id}
                                                 title={this.state.title}
                                                 msg={this.state.msg}
+                                                status={this.state.status}
                                                 addBooking={(data) => {
                                                     this.addBooking(data)
                                                 }}
@@ -121,22 +137,29 @@ class Event extends Component {
 
                 {!this.state.showModal &&
                 <div>
-                    <h3 className="callout">
-                        Click an event to see more info, or drag the mouse over the calendar to
-                        select a date/time range.
-                    </h3>
-                    <BigCalendar
-                        selectable
-                        resizable
-                        onEventResize={this.resizeEvent}
-                        events={this.props.data}
-                        defaultView="week"
-                        scrollToTime={new Date(2018, 1, 1, 6)}
-                        defaultDate={new Date()}
-                        onSelectEvent={event => this.onEventClick(event)}
-                        onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)
-                        }
-                    />
+                    <div active="plan" title="Planning">
+                        <div className="content-app fixed-header">
+                            <div className="app-body">
+                                <div className="box">
+                                    <BigCalendar
+                                        selectable
+                                        resizable
+                                        popup
+                                        popupOffset={{x: 30, y: 20}}
+                                        onEventResize={this.resizeEvent}
+                                        events={this.props.data}
+                                        defaultView="week"
+                                        scrollToTime={new Date(2018, 1, 1, 10, 10, 0)}
+                                        defaultDate={new Date()}
+                                        onSelectEvent={event => this.onEventClick(event)}
+                                        onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)}
+                                        eventPropGetter={events => this.eventStyleGetter(events)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 }
             </React.Fragment>

@@ -69,7 +69,7 @@ class Bookings extends Component {
             },
         })
             .then(res => {
-                console.log('RESPONSE: ', res.data)
+                // console.log('RESPONSE: ', res.data)
                 const bookings = res.data
                 // console.log(bookings)
                 this.setState({bookings: bookings})
@@ -94,7 +94,7 @@ class Bookings extends Component {
                     <label htmlFor="">Data inicio</label>
                     <DatePicker
                         defaultText="Data inicio"
-                        todayButton={"Vandaag"}
+                        todayButton={"Hoje"}
                         dateFormat="DD/MM/YYYY"
                         selected={this.state.startDate}
                         onChange={this.handleChangeStart}
@@ -104,7 +104,7 @@ class Bookings extends Component {
                     <label htmlFor="">Data fim</label>
                     <DatePicker
                         defaultText="Data fim"
-                        todayButton={"Vandaag"}
+                        todayButton={"Hoje"}
                         dateFormat="DD/MM/YYYY"
                         selected={this.state.endDate}
                         onChange={this.handleChangeEnd}

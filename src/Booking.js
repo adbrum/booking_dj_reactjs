@@ -12,7 +12,9 @@ class Booking extends Component {
         this.state = {
             bookings: [],
             redirect: '',
-            type: 'save'
+            hex_color: '',
+            type: 'save',
+
         }
 
         this.addBooking = this.addBooking.bind(this)
@@ -31,6 +33,7 @@ class Booking extends Component {
             .catch(err => {
                 console.log(err.response)
             })
+
     }
 
     addBooking = (data) => {
@@ -71,13 +74,14 @@ class Booking extends Component {
     }
 
     editBooking = (data) => {
-        console.log('##########: ', data)
         this.setState({type: 'edit'})
         axios.post(`/booking/edit/${data[1].id}`,
             {
                 author: 1,
                 title: data[0].title,
-                description: data[0].msg
+                description: data[0].msg,
+                status: data[0].status,
+                hex_color: data[0].hex_color
             })
             .then(res => {
                 // console.log(res);
