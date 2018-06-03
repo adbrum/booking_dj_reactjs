@@ -42,6 +42,7 @@ class Booking extends Component {
         let description = data[0].msg
         let start = data[0].start
         let end = data[0].end
+        let hex_color = data[0].hex_color
 
         let booking = {
             author,
@@ -49,6 +50,7 @@ class Booking extends Component {
             title,
             start,
             end,
+            hex_color,
         }
 
         let bookings = this.state.bookings

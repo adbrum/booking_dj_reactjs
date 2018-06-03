@@ -102,14 +102,14 @@ def detail(request, pk):
 @login_required
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
-    print('CREATE: ', data)
     if request.method == 'POST':
         booking = Event(
             author=data['author'],
             title=data['title'],
             description=data['description'],
             start=data['start'],
-            end=data['end']
+            end=data['end'],
+            hex_color=data['hex_color']
         )
         booking.save()
 

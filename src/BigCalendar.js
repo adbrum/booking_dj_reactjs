@@ -85,7 +85,7 @@ class Event extends Component {
 
     eventStyleGetter = (event, start, end, isSelected) => {
         if (event.hex_color) {
-            let backgroundColor = '#' + event.hex_color;
+            let backgroundColor = event.hex_color;
             let style = {
                 backgroundColor: backgroundColor,
                 borderRadius: '5px',

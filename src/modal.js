@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { SketchPicker } from 'react-color';
+import ColorPicker from "./ColorPicker";
 
 class Modal extends Component {
     constructor(props) {
@@ -12,6 +14,8 @@ class Modal extends Component {
             status: '',
             hex_color: ''
         }
+
+        this.handleHexColor = this.handleHexColor.bind()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -41,9 +45,14 @@ class Modal extends Component {
 
         if (e.target.checked) {
             this.setState({
-                hex_color: '006600',
+                hex_color: this.state.hex_color,
             })
         }
+    }
+
+    handleHexColor = (color) => {
+        console.log('COLOR: ', color)
+        this.setState({ hex_color: color.hex })
     }
 
     handleSave() {
@@ -76,6 +85,7 @@ class Modal extends Component {
                                 <input className="checkbox" ref="status" type="checkbox" checked={this.state.status}
                                        onChange={(e) => this.statusHandler(e)}/>
                             </p>
+                            <ColorPicker action={(e) => this.handleHexColor(e)}/>
                         </div>
                         <div className="modal-footer form-group">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
