@@ -34,11 +34,16 @@ class Modal extends Component {
     }
 
     statusHandler(e) {
-        console.log('ESTATUS: ', e.target.checked)
         this.setState({
             status: e.target.checked,
-            hex_color: '006600',
-        });
+            hex_color: '',
+        })
+
+        if (e.target.checked) {
+            this.setState({
+                hex_color: '006600',
+            })
+        }
     }
 
     handleSave() {
