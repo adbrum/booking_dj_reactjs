@@ -34,7 +34,7 @@ class App extends Component {
             <ErrorBoundary>
                 <Router history={history}>
                     <div className="container">
-                        <DisplayLogin/>
+                        {/*<DisplayLogin/>*/}
                         <NavigationItems onClick={this.handleLogout}/>
                         <hr/>
                         <Switch>
@@ -43,8 +43,6 @@ class App extends Component {
                             <Route exact path='/booking' component={Booking}/>
                             <Route path='/success' component={Success}/>
                         </Switch>
-
-                        <button onClick={() => this.props.loginSuccess(false)}>-</button>
                     </div>
                 </Router>
             </ErrorBoundary>

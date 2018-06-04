@@ -24,7 +24,17 @@ def api_login(request):
 
     if user is not None:
         login(request, user)
-        return JsonResponse({"user": user.pk})
+        data_user = []
+        user = User.objects.get(pk=user.pk)
+        data_user.append({
+            "id": user.pk,
+            "username": user.username,
+            # "first_name": user.first_name,
+            # "last_name": user.last_name,
+            # "email": user.email,
+            # "is_staff": user.is_staff
+        })
+        return JsonResponse(list(data_user), safe=False)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

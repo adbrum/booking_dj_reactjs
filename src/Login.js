@@ -32,7 +32,7 @@ class Login extends Component {
                 console.log('RESPONSE: ', res.data)
                 this.props.redirect()
                 this.props.user(res.data.user)
-                this.props.loginSuccess(true)
+                this.props.loginSuccess({status: true, data_user: res.data})
             })
             .catch(err => {
                 console.log('ERRO: ', err)
@@ -42,7 +42,9 @@ class Login extends Component {
     render() {
         return (
             <div>
-                LOGIN: {this.props.login.toString()}
+                {this.props.login.toString()}
+                {this.props.id.toString()}
+                {this.props.username.toString()}
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>
@@ -54,21 +56,22 @@ class Login extends Component {
                         </button>
                     </div>
                 </form>
-                <button onClick={() => this.props.loginSuccess(true)}>-</button>
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-  return {
-    login: state.login
-  }
+    return {
+        login: state.login,
+        id: state.id,
+        username: state.username
+    }
 }
 const mapDispatchToProps = (dispatch) => {
-  return {
-    loginSuccess: (value) => dispatch(loginSuccess(value)),
-  }
+    return {
+        loginSuccess: (value) => dispatch(loginSuccess(value)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
