@@ -127,15 +127,9 @@ class Event extends Component {
                                                 msg={this.state.msg}
                                                 status={this.state.status}
                                                 hex_color={this.state.hex_color}
-                                                addBooking={(data) => {
-                                                    this.addBooking(data)
-                                                }}
-                                                editBooking={(data) => {
-                                                    this.editBooking(data)
-                                                }}
-                                                deleteBooking={(data) => {
-                                                    this.deleteBooking(data)
-                                                }}
+                                                addBooking={(data) => {this.addBooking(data)}}
+                                                editBooking={(data) => {this.editBooking(data)}}
+                                                deleteBooking={(data) => {this.deleteBooking(data)}}
                                                 {...props}/>}/>
                 }
 
@@ -146,9 +140,9 @@ class Event extends Component {
                             <div className="app-body">
                                 <div className="box">
                                     <BigCalendar
-                                        selectable
-                                        resizable
-                                        popup
+                                        selectable={true}
+                                        resizable={true}
+                                        popup={true}
                                         popupOffset={{x: 30, y: 20}}
                                         onEventResize={this.resizeEvent}
                                         events={this.props.data}
@@ -158,6 +152,7 @@ class Event extends Component {
                                         onSelectEvent={event => this.onEventClick(event)}
                                         onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)}
                                         eventPropGetter={events => this.eventStyleGetter(events)}
+                                        allDayAccessor={"Todo o dia"}
                                     />
                                 </div>
                             </div>

@@ -8,15 +8,24 @@ class Home extends Component {
 
         this.state = {
             user: '',
-            redirect: false
+            redirect: false,
         }
+    }
+
+    handleUser = (user) =>{
+        console.log('#############: ', user)
+        this.setState({user: user})
+    }
+
+    handleShow = () =>{
+        this.setState({redirect: true})
     }
 
     render() {
         return (
             <div>
                 {this.state.redirect && <Booking user={this.state.user}/>}
-                {!this.state.redirect && <Login/>}
+                {!this.state.redirect && <Login redirect={this.handleShow} user={(user) => this.handleUser(user)}/>}
             </div>
         )
     }
