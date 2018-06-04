@@ -8,6 +8,10 @@ import history from './history'
 import NavigationItems from "./NavigationItems/NavigationItems";
 import Success from "./Success";
 import ErrorBoundary from "./ErrorBoundary";
+import DisplayLogin from "./DisplayLogin";
+import {connect} from 'react-redux'
+import {loginSuccess} from "./actions";
+
 
 class App extends Component {
 
@@ -17,6 +21,7 @@ class App extends Component {
             url: "/api-auth/logout/",
         })
             .then(res => {
+                this.props.loginSuccess(false)
                 console.log('RESPONSE: ', res)
             })
             .catch(err => {
@@ -29,6 +34,7 @@ class App extends Component {
             <ErrorBoundary>
                 <Router history={history}>
                     <div className="container">
+                        <DisplayLogin/>
                         <NavigationItems onClick={this.handleLogout}/>
                         <hr/>
                         <Switch>
@@ -37,6 +43,8 @@ class App extends Component {
                             <Route exact path='/booking' component={Booking}/>
                             <Route path='/success' component={Success}/>
                         </Switch>
+
+                        <button onClick={() => this.props.loginSuccess(false)}>-</button>
                     </div>
                 </Router>
             </ErrorBoundary>
@@ -44,4 +52,16 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    login: state.login
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginSuccess: (value) => dispatch(loginSuccess(value)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

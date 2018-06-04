@@ -1,11 +1,17 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {loginSuccess} from "./actions";
 
 class Login extends Component {
     constructor(props) {
         super(props)
 
         this.loginHandle = this.loginHandle.bind(this)
+    }
+
+    componentDidMount() {
+        console.log('#################### --', this.props.login)
     }
 
     loginHandle(event) {
@@ -26,6 +32,7 @@ class Login extends Component {
                 console.log('RESPONSE: ', res.data)
                 this.props.redirect()
                 this.props.user(res.data.user)
+                this.props.loginSuccess(true)
             })
             .catch(err => {
                 console.log('ERRO: ', err)
@@ -35,6 +42,7 @@ class Login extends Component {
     render() {
         return (
             <div>
+                LOGIN: {this.props.login.toString()}
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>
@@ -46,9 +54,21 @@ class Login extends Component {
                         </button>
                     </div>
                 </form>
+                <button onClick={() => this.props.loginSuccess(true)}>-</button>
             </div>
         )
     }
 }
 
-export default Login
+const mapStateToProps = (state) => {
+  return {
+    login: state.login
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginSuccess: (value) => dispatch(loginSuccess(value)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import Booking from "./Booking";
 import Login from "./Login";
+import {DisplayLogin} from "./DisplayLogin";
 
 class Home extends Component {
     constructor(props) {
