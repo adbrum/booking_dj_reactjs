@@ -16,24 +16,17 @@ import {Route} from "react-router-dom";
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment))
 
 class Event extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            events: [],
-            id: '',
-            title: '',
-            msg: '',
-            start: '',
-            end: '',
-            type: 'save',
-            status: ''
-        }
-
-        this.onSlotChange = this.onSlotChange.bind(this)
-        this.onEventClick = this.onEventClick.bind(this)
-        this.addBooking = this.addBooking.bind(this)
-        this.editBooking = this.editBooking.bind(this)
-        this.eventStyleGetter = this.eventStyleGetter.bind(this)
+    onEventClick = (event) => {
+        //console.log('ONCLICK EVENT: ', event)
+        this.setState({
+            id: event.id,
+            type: 'edit',
+            title: event.title,
+            msg: event.description,
+            status: event.status,
+            hex_color: event.hex_color,
+            showModal: true
+        })
     }
 
     onSlotChange = (slotInfo) => {
@@ -50,15 +43,25 @@ class Event extends Component {
         })
     }
 
-    onEventClick = (event) => {
-        this.setState({
-            id: event.id,
-            type: 'edit',
-            title: event.title,
-            msg: event.description,
-            status: event.status,
-            showModal: true
-        })
+    constructor(props) {
+        super(props)
+        this.state = {
+            events: [],
+            id: '',
+            title: '',
+            msg: '',
+            start: '',
+            end: '',
+            type: 'save',
+            status: '',
+            hex_color: ''
+        }
+
+        this.onSlotChange = this.onSlotChange.bind(this)
+        this.onEventClick = this.onEventClick.bind(this)
+        this.addBooking = this.addBooking.bind(this)
+        this.editBooking = this.editBooking.bind(this)
+        this.eventStyleGetter = this.eventStyleGetter.bind(this)
     }
 
     addBooking = (data) => {
@@ -123,6 +126,7 @@ class Event extends Component {
                                                 title={this.state.title}
                                                 msg={this.state.msg}
                                                 status={this.state.status}
+                                                hex_color={this.state.hex_color}
                                                 addBooking={(data) => {
                                                     this.addBooking(data)
                                                 }}

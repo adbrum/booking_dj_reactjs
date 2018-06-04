@@ -1,7 +1,6 @@
 import datetime
 import json
 
-
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
@@ -94,7 +93,8 @@ def detail(request, pk):
         "author": 1,
         "title": detail.title,
         "start": detail.start,
-        "end": detail.end
+        "end": detail.end,
+        "hex_color": detail.hex_color
     })
 
     return JsonResponse(bookings, safe=False)
@@ -120,9 +120,7 @@ def create(request):
 @login_required
 def edit(request, pk):
     data = json.loads(request.body.decode('utf-8'))
-    print('DATA: ', data)
-    print('STATUS: ', data['status'])
-    print('HEXCOLOR: ', data['hex_color'])
+
     booking = Event.objects.get(pk=pk)
     booking.title = data['title']
     booking.description = data['description']

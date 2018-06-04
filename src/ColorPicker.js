@@ -9,17 +9,19 @@ class ColorPicker extends React.Component {
 
     state = {
         displayColorPicker: false,
-        color: {
-            r: '49',
-            g: '116',
-            b: '173',
-            a: '100',
-        },
+        color: '#3174ad'
+        // color: {
+        //     r: '49',
+        //     g: '116',
+        //     b: '173',
+        //     a: '100',
+        // },
     };
-
-    componentDidMount() {
-        this.props.action(this.state.color)
-    }
+    handleChange = (color) => {
+        console.log(color.hex)
+        this.props.action(color)
+        this.setState({color: color.hex})
+    };
 
     handleClick = () => {
         this.setState({displayColorPicker: !this.state.displayColorPicker})
@@ -29,11 +31,10 @@ class ColorPicker extends React.Component {
         this.setState({displayColorPicker: false})
     };
 
-    handleChange = (color) => {
-        console.log(color.hex)
-        this.props.action(color)
-        this.setState({color: color.rgb})
-    };
+    componentDidMount() {
+        this.setState({color: this.props.value})
+        this.props.action(this.state.color)
+    }
 
     render() {
 
@@ -43,7 +44,8 @@ class ColorPicker extends React.Component {
                     width: '36px',
                     height: '14px',
                     borderRadius: '2px',
-                    background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
+                    // background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
+                    background: `${this.state.color}`,
                 },
                 swatch: {
                     padding: '5px',

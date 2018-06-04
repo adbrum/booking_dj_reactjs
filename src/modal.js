@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
-import { SketchPicker } from 'react-color';
 import ColorPicker from "./ColorPicker";
 
 class Modal extends Component {
+    handleHexColor = (color) => {
+        // console.log('COLOR: ', color)
+        this.setState({hex_color: color.hex})
+    }
+
     constructor(props) {
         super(props);
         this.handleSave = this.handleSave.bind(this);
         this.state = {
+            id: '',
             title: '',
             msg: '',
             start: '',
@@ -16,17 +21,6 @@ class Modal extends Component {
         }
 
         this.handleHexColor = this.handleHexColor.bind()
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            title: nextProps.title,
-            msg: nextProps.msg,
-            start: this.props.start,
-            end: this.props.end,
-            status: this.props.status,
-            hex_color: this.props.hex_color
-        });
     }
 
     titleHandler(e) {
@@ -50,9 +44,16 @@ class Modal extends Component {
         }
     }
 
-    handleHexColor = (color) => {
-        console.log('COLOR: ', color)
-        this.setState({ hex_color: color.hex })
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            id: this.props.id,
+            title: nextProps.title,
+            msg: nextProps.msg,
+            start: this.props.start,
+            end: this.props.end,
+            status: this.props.status,
+            hex_color: this.props.hex_color
+        });
     }
 
     handleSave() {
@@ -85,7 +86,7 @@ class Modal extends Component {
                                 <input className="checkbox" ref="status" type="checkbox" checked={this.state.status}
                                        onChange={(e) => this.statusHandler(e)}/>
                             </p>
-                            <ColorPicker action={(e) => this.handleHexColor(e)}/>
+                            <ColorPicker action={(e) => this.handleHexColor(e)} value={this.props.hex_color}/>
                         </div>
                         <div className="modal-footer form-group">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import axios from 'axios'
 
 import {Route} from "react-router-dom";
-import Success from "./Success";
 import Event from "./BigCalendar";
 
 class Booking extends Component {
@@ -23,17 +22,27 @@ class Booking extends Component {
         this.deleteBooking = this.deleteBooking.bind(this)
     }
 
-    componentDidMount() {
-        // axios.get(`/bookings/${this.props.user}`)
-        axios.get(`/bookings/1`)
+    editBooking = (data) => {
+        this.setState({type: 'edit'})
+        axios.post(`/booking/edit/${data[0].id}`,
+            {
+                author: 1,
+                title: data[0].title,
+                description: data[0].msg,
+                status: data[0].status,
+                hex_color: data[0].hex_color
+            })
             .then(res => {
-                const bookings = res.data
-                this.setState({bookings: bookings})
+                // console.log(res);
+                // console.log('XXXXXXXX: ',res.data);
+                this.setState({
+                    bookings: res.data,
+                    redirect: ''
+                })
             })
             .catch(err => {
-                console.log(err.response)
+                console.log(err)
             })
-
     }
 
     addBooking = (data) => {
@@ -75,27 +84,18 @@ class Booking extends Component {
             })
     }
 
-    editBooking = (data) => {
-        this.setState({type: 'edit'})
-        axios.post(`/booking/edit/${data[1].id}`,
-            {
-                author: 1,
-                title: data[0].title,
-                description: data[0].msg,
-                status: data[0].status,
-                hex_color: data[0].hex_color
-            })
+    componentDidMount() {
+        // axios.get(`/bookings/${this.props.user}`)
+        axios.get(`/bookings/1`)
             .then(res => {
-                // console.log(res);
                 // console.log('XXXXXXXX: ',res.data);
-                this.setState({
-                    bookings: res.data,
-                    redirect: ''
-                })
+                const bookings = res.data
+                this.setState({bookings: bookings})
             })
             .catch(err => {
-                console.log(err)
+                console.log(err.response)
             })
+
     }
 
     deleteBooking = (data) => {

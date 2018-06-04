@@ -37,10 +37,6 @@ class List extends Component {
         const requiredItem = this.state.requiredItem;
         let tempbrochure = this.state.brochure;
         tempbrochure[requiredItem] = item;
-        tempbrochure.push({
-            'id': this.props.id,
-            'status': this.props.status,
-        })
         this.setState({brochure: tempbrochure});
         this.props.editBooking(this.state.brochure)
     }
@@ -98,11 +94,13 @@ class List extends Component {
                 />}
                 {this.props.type === 'edit' &&
                 <Modal
+                    id={this.props.id}
                     title={modalData.title}
                     msg={modalData.msg}
                     start={this.props.start}
                     end={this.props.end}
                     status={this.props.status}
+                    hex_color={this.props.hex_color}
                     saveModalDetails={this.editModalDetails}
                 />}
             </div>
