@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Link, Redirect, Route} from 'react-router-dom'
 import Success from "./Success";
 import axios from 'axios'
+import {connect} from "react-redux";
 
 class DetailBooking extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ class DetailBooking extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/booking/${this.props.match.params.idBooking}`)
+        axios.get(`/booking/${this.props.id}`)
             .then(res => {
                 const details = res.data
                 //console.log(details)
@@ -106,11 +107,12 @@ class DetailBooking extends Component {
     }
 
     render() {
-        if (this.state.redirect === 'success'){
-            return <Route render={(props)=> <Success exclude={this.state.exclude} data={this.state.details} {...props}/>}/>
+        if (this.state.redirect === 'success') {
+            return <Route
+                render={(props) => <Success exclude={this.state.exclude} data={this.state.details} {...props}/>}/>
         }
-        if (this.state.redirect === 'cancel'){
-            return <Redirect to={`/bookings`} />
+        if (this.state.redirect === 'cancel') {
+            return <Redirect to={`/bookings`}/>
         }
         return (
             <div>
@@ -172,7 +174,13 @@ class DetailBooking extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        id: state.id
+    }
+}
 
-export default DetailBooking
+export default connect(mapStateToProps)(DetailBooking)
+
 
 

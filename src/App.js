@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Route, Router, Switch} from 'react-router-dom'
-import axios from "axios/index";
 import Home from "./Home";
 import Bookings from "./Bookings";
 import Booking from "./Booking";
 import history from './history'
-import NavigationItems from "./NavigationItems/NavigationItems";
+import NavigationItems from "./Navigation/NavigationItems";
 import Logout from "./Logout";
 import ErrorBoundary from "./ErrorBoundary";
 import {connect} from 'react-redux'

@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-
 import {Route} from "react-router-dom";
 import Event from "./BigCalendar";
+import {connect} from "react-redux";
 
 class Booking extends Component {
     constructor(props) {
@@ -86,7 +86,7 @@ class Booking extends Component {
 
     componentDidMount() {
         // axios.get(`/bookings/${this.props.user}`)
-        axios.get(`/bookings/1`)
+        axios.get(`/bookings/${this.props.id}`)
             .then(res => {
                 // console.log('XXXXXXXX: ',res.data);
                 const bookings = res.data
@@ -143,4 +143,10 @@ class Booking extends Component {
     }
 }
 
-export default Booking
+const mapStateToProps = (state) => {
+    return {
+        id: state.id
+    }
+}
+
+export default connect(mapStateToProps)(Booking)
