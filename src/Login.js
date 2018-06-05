@@ -42,9 +42,9 @@ class Login extends Component {
     render() {
         return (
             <div>
-                {this.props.login.toString()}
-                {this.props.id.toString()}
-                {this.props.username.toString()}
+                {/*{this.props.login.toString()}*/}
+                {/*{this.props.id.toString()}*/}
+                {/*{this.props.username.toString()}*/}
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>
