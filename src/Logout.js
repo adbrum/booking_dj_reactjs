@@ -11,24 +11,23 @@ const Logout = (props) => {
     })
         .then(res => {
             props.logout(false)
-            console.log('RESPONSE: ', res)
         })
         .catch(err => {
             console.log('ERRO: ', err)
         })
 
-    return <Route render={() => (<Redirect to="/"/>)} />
+    return <Route render={() => (<Redirect to="/"/>)}/>
 }
 
 const mapStateToProps = (state) => {
-  return {
-    login: state.login
-  }
+    return {
+        login: state.login
+    }
 }
 const mapDispatchToProps = (dispatch) => {
-  return {
-    logout: (value) => dispatch(logout(value)),
-  }
+    return {
+        logout: (value) => dispatch(logout(value)),
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logout)

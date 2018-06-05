@@ -1,49 +1,17 @@
-import React, {Component} from 'react'
-import Booking from "./Booking";
+import React from 'react'
 import Login from "./Login";
-import {DisplayLogin} from "./DisplayLogin";
 import {connect} from "react-redux";
-import {loginSuccess} from "./actions";
 
-
-class Home extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            user: '',
-            redirect: false,
-        }
-    }
-
-    handleUser = (user) =>{
-        console.log('#############: ', user)
-        this.setState({user: user})
-    }
-
-    handleShow = () =>{
-        console.log('REDIRECT HOME / BOKKINGS')
-        this.setState({redirect: true})
-    }
-
-    render() {
-        return (
-            <div>
-                {/*{this.state.redirect && <Booking user={this.state.user}/>}*/}
-                {!this.props.login &&
-                <Login redirect={this.handleShow}
-                       user={(user) => this.handleUser(user)}
-                />}
-
-            </div>
-        )
-    }
+const Home = (props) => {
+    return (
+        <div>
+            {!props.login && <Login redirect={this.handleShow}/>}
+        </div>
+    )
 }
 const mapStateToProps = (state) => {
     return {
         login: state.login,
-        id: state.id,
-        username: state.username
     }
 }
 

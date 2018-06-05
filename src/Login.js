@@ -10,10 +10,6 @@ class Login extends Component {
         this.loginHandle = this.loginHandle.bind(this)
     }
 
-    componentDidMount() {
-        console.log('#################### --', this.props.login)
-    }
-
     loginHandle(event) {
         event.preventDefault()
 
@@ -29,9 +25,7 @@ class Login extends Component {
             },
         })
             .then(res => {
-                console.log('RESPONSE: ', res.data)
-                this.props.redirect()
-                this.props.user(res.data.user)
+                // console.log('RESPONSE: ', res.data)
                 this.props.loginSuccess({status: true, data_user: res.data})
             })
             .catch(err => {
@@ -42,9 +36,6 @@ class Login extends Component {
     render() {
         return (
             <div>
-                {/*{this.props.login.toString()}*/}
-                {/*{this.props.id.toString()}*/}
-                {/*{this.props.username.toString()}*/}
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>

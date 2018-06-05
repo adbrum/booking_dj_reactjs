@@ -100,13 +100,11 @@ class Event extends Component {
             return {
                 style: style
             };
-
         }
         let style = {}
         return {
             style: style
         };
-
     }
 
     render() {
@@ -143,8 +141,8 @@ class Event extends Component {
                                         selectable={true}
                                         resizable={true}
                                         popup={true}
-                                        popupOffset={{x: 30, y: 20}}
-                                        onEventResize={this.resizeEvent}
+                                        // popupOffset={{x: 30, y: 20}}
+                                        // onEventResize={this.resizeEvent}
                                         events={this.props.data}
                                         defaultView="week"
                                         scrollToTime={new Date(2018, 1, 1, 10, 10, 0)}
@@ -152,7 +150,6 @@ class Event extends Component {
                                         onSelectEvent={event => this.onEventClick(event)}
                                         onSelectSlot={(slotInfo) => this.onSlotChange(slotInfo)}
                                         eventPropGetter={events => this.eventStyleGetter(events)}
-                                        allDayAccessor={"Todo o dia"}
                                     />
                                 </div>
                             </div>
