@@ -22,14 +22,15 @@ class Home extends Component {
     }
 
     handleShow = () =>{
+        console.log('REDIRECT HOME / BOKKINGS')
         this.setState({redirect: true})
     }
 
     render() {
         return (
             <div>
-                {this.state.redirect && <Booking user={this.state.user}/>}
-                {!this.props.id && !this.state.redirect &&
+                {/*{this.state.redirect && <Booking user={this.state.user}/>}*/}
+                {!this.props.login &&
                 <Login redirect={this.handleShow}
                        user={(user) => this.handleUser(user)}
                 />}

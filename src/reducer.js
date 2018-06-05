@@ -14,6 +14,8 @@ const authenticatedReducer = (state = initialState, action) => {
                 id: state.id = action.value.data_user[0].id,
                 username: state.username = action.value.data_user[0].username
             }
+        case 'LOGOUT':
+            return {...state, login: state.login = action.value.status}
         default:
             return state;
     }

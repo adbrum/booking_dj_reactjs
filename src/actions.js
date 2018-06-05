@@ -1,5 +1,4 @@
 export const loginSuccess = (value) =>{
-    console.log('SUCESSO: ', value)
   return {
     type: 'LOGIN',
     value: value

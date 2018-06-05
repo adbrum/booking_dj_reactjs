@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux";
+import {loginSuccess} from "../actions";
 
 const NavigationItems = (props) => {
     return (
@@ -31,7 +32,7 @@ const NavigationItems = (props) => {
                             <ul className="dropdown-menu">
                                 <li><a href="#">Perfil</a></li>
                                 <li role="separator" className="divider"/>
-                                <li><Link to="/" onClick={props.onClick}>Sair</Link></li>
+                                <li><Link to="/Logout">Sair</Link></li>
                             </ul>
                         </li>
                     </ul>
@@ -44,10 +45,15 @@ const NavigationItems = (props) => {
 const mapStateToProps = (state) => {
     return {
         login: state.login,
-        id: state.id,
         username: state.username
     }
 }
 
-export default connect(mapStateToProps)(NavigationItems)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loginSuccess: (value) => dispatch(loginSuccess(value)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationItems)
 
