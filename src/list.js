@@ -90,6 +90,7 @@ class List extends Component {
                     start={this.props.start}
                     end={this.props.end}
                     status={this.props.status}
+                    hex_color={'#3174ad'}
                     saveModalDetails={this.saveModalDetails}
                 />}
                 {this.props.type === 'edit' &&

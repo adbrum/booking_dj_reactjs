@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import ColorPicker from "./ColorPicker";
 
 class Modal extends Component {
-    handleHexColor = (color) => {
-        // console.log('COLOR: ', color)
-        this.setState({hex_color: color.hex})
-    }
-
     constructor(props) {
         super(props);
         this.handleSave = this.handleSave.bind(this);
@@ -22,6 +17,12 @@ class Modal extends Component {
 
         this.handleHexColor = this.handleHexColor.bind()
     }
+
+    handleHexColor = (color) => {
+        // console.log('COLOR: ', color)
+        this.setState({hex_color: color.hex})
+    }
+
 
     titleHandler(e) {
         this.setState({title: e.target.value});
@@ -82,11 +83,14 @@ class Modal extends Component {
                                                                                        value={this.state.msg}
                                                                                        onChange={(e) => this.msgHandler(e)}/>
                             </p>
-                            <p><span className="modal-lable">Presente</span>
-                                <input className="checkbox" ref="status" type="checkbox" checked={this.state.status}
-                                       onChange={(e) => this.statusHandler(e)}/>
+                            {/*<p><span className="modal-lable">Presente</span>*/}
+                                {/*<input className="checkbox" ref="status" type="checkbox" checked={this.state.status}*/}
+                                       {/*onChange={(e) => this.statusHandler(e)}/>*/}
+                            {/*</p>*/}
+                            <p><span className="modal-lable">Cor</span>
+                                <ColorPicker action={(e) => this.handleHexColor(e)} value={this.props.hex_color}/>
                             </p>
-                            <ColorPicker action={(e) => this.handleHexColor(e)} value={this.props.hex_color}/>
+
                         </div>
                         <div className="modal-footer form-group">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>

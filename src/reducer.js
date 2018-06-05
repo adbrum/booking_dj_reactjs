@@ -1,10 +1,10 @@
-const initialState = {
-    login: false,
-    id: '',
-    username: ''
-}
+// const initialState = {
+//     login: false,
+//     id: '',
+//     username: ''
+// }
 
-const authenticatedReducer = (state = initialState, action) => {
+const authenticatedReducer = (state = {}, action) => {
     switch (action.type) {
         case 'LOGIN':
             // console.log('LOGIN', action.value.data_user[0])

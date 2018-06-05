@@ -18,7 +18,7 @@ class ColorPicker extends React.Component {
         // },
     };
     handleChange = (color) => {
-        console.log(color.hex)
+        // console.log('COLORPICKER: ', color.hex)
         this.props.action(color)
         this.setState({color: color.hex})
     };
@@ -43,7 +43,8 @@ class ColorPicker extends React.Component {
                 color: {
                     width: '36px',
                     height: '14px',
-                    borderRadius: '2px',
+                    borderRadius: '5px',
+                    text: 'Cor',
                     // background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
                     background: `${this.state.color}`,
                 },

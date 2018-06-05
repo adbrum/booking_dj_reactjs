@@ -87,6 +87,7 @@ class Event extends Component {
     }
 
     eventStyleGetter = (event, start, end, isSelected) => {
+        // console.log('####: ', event.hex_color)
         if (event.hex_color) {
             let backgroundColor = event.hex_color;
             let style = {
@@ -141,8 +142,8 @@ class Event extends Component {
                                         selectable={true}
                                         resizable={true}
                                         popup={true}
-                                        // popupOffset={{x: 30, y: 20}}
-                                        // onEventResize={this.resizeEvent}
+                                        popupOffset={{x: 30, y: 20}}
+                                        onEventResize={this.resizeEvent}
                                         events={this.props.data}
                                         defaultView="week"
                                         scrollToTime={new Date(2018, 1, 1, 10, 10, 0)}
