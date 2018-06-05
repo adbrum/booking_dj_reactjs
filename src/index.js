@@ -12,7 +12,7 @@ import logger from 'redux-logger'
 
 
 let store = createStore(authenticatedReducer,
-  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(logger))
 
 axios.defaults.xsrfHeaderName = "X-CSRFToken";

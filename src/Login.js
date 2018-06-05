@@ -33,6 +33,12 @@ class Login extends Component {
             })
     }
 
+    handleEnter(event) {
+        if (event.key.keyCode === 13) {
+            this.loginHandle(event)
+        }
+    }
+
     render() {
         return (
             <div>
@@ -41,7 +47,8 @@ class Login extends Component {
                         <label htmlFor="">Nome</label>
                         <input type="text" ref="username" placeholder="Nome" className="form-control"/>
                         <label htmlFor="">Password</label>
-                        <input type="text" ref="password" placeholder="senha" className="form-control"/>
+                        <input type="text" onKeyUp={(e) => this.handleEnter(e)} ref="password" placeholder="senha"
+                               className="form-control"/>
                         <hr/>
                         <button type="submit" onClick={(e) => this.loginHandle(e)} className="btn btn-success">Login
                         </button>

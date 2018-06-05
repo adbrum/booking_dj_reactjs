@@ -18,11 +18,15 @@ const NavigationItems = (props) => {
                     <Link className="navbar-brand" to="/">Agenda de marcações</Link>
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul className="nav navbar-nav">
-                        <li><Link to="/">Home</Link></li>
-                        <li><Link to="/booking">Agendar</Link></li>
-                        <li><Link to="/bookings">Agendamentos</Link></li>
-                    </ul>
+                        {props.login ?
+                            <ul className="nav navbar-nav">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/booking">Agendar</Link></li>
+                            <li><Link to="/bookings">Agendamentos</Link></li>
+                            </ul> :
+                            <ul className="nav navbar-nav">
+                                <li><Link to="/">Home</Link></li>
+                            </ul>}
                     <ul className="nav navbar-nav navbar-right">
                         <li className="dropdown">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
