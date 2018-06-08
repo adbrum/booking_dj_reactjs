@@ -66,12 +66,13 @@ class Event extends Component {
 
     addBooking = (data) => {
         this.setState({type: 'save'})
-        this.props.addBooking(data)
+        this.props.addBooking(data[0])
         this.setState({showModal: false})
     }
 
     editBooking = (data) => {
-        this.props.editBooking(data)
+        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXX: ', data)
+        this.props.editBooking(data[0])
         this.setState({
             type: 'edit',
             showModal: false
@@ -109,6 +110,9 @@ class Event extends Component {
     }
 
     render() {
+        {
+            JSON.stringify(this.props)
+        }
         this.props.data.map(item => {
             item.start = new Date(item.start)
             item.end = new Date(item.end)
@@ -163,5 +167,6 @@ class Event extends Component {
         )
     }
 }
+
 
 export default Event

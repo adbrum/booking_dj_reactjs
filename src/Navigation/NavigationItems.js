@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom'
 import {connect} from "react-redux";
-import {loginSuccess} from "../actions";
 
 const NavigationItems = (props) => {
     return (
@@ -18,7 +17,7 @@ const NavigationItems = (props) => {
                     <Link className="navbar-brand" to="/">Agenda de marcações</Link>
                 </div>
                 <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        {props.login ?
+                    {props.isLogged ?
                             <ul className="nav navbar-nav">
                             <li><Link to="/">Home</Link></li>
                             <li><Link to="/booking">Agendar</Link></li>
@@ -31,7 +30,7 @@ const NavigationItems = (props) => {
                         <li className="dropdown">
                             <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-haspopup="true" aria-expanded="false">
-                                {props.login ? props.username.toString() : "Utilizador"}
+                                {props.isLogged ? props.data.username.toString() : "Utilizador"}
                                 <span className="caret"/></a>
                             <ul className="dropdown-menu">
                                 <li><a href="#">Perfil</a></li>
@@ -48,16 +47,15 @@ const NavigationItems = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login,
-        username: state.username
+        data: state.loginReducer.data,
+        isLogged: state.loginReducer.isLogged,
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        loginSuccess: (value) => dispatch(loginSuccess(value)),
-    }
-}
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         loginSuccess: (value) => dispatch(loginSuccess(value)),
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavigationItems)
-
+export default connect(mapStateToProps)(NavigationItems)

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import axios from 'axios'
 import {connect} from 'react-redux'
-import {loginSuccess} from "./actions";
+import {loadLogin} from "./actions";
+
 
 class Login extends Component {
     constructor(props) {
@@ -16,21 +16,10 @@ class Login extends Component {
         let username = this.refs.username.value
         let password = this.refs.password.value
 
-        axios({
-            method: "post",
-            url: "/login/",
-            data: {
-                username: username,
-                password: password,
-            },
+        this.props.loadData({
+            'username': username,
+            'password': password
         })
-            .then(res => {
-                // console.log('RESPONSE: ', res.data)
-                this.props.loginSuccess({status: true, data_user: res.data})
-            })
-            .catch(err => {
-                console.log('ERRO: ', err)
-            })
     }
 
     handleEnter(event) {
@@ -61,14 +50,14 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login,
-        id: state.id,
-        username: state.username
+        isFetching: state.loginReducer.isFetching,
+        data: state.loginReducer.data,
+        error: state.loginReducer.error
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        loginSuccess: (value) => dispatch(loginSuccess(value)),
+        loadData: (value) => dispatch(loadLogin(value)),
     }
 }
 

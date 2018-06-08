@@ -8,16 +8,24 @@ import NavigationItems from "./Navigation/NavigationItems";
 import Logout from "./Logout";
 import ErrorBoundary from "./ErrorBoundary";
 import {connect} from 'react-redux'
+import {loginReducer} from './reducers/loginReducer'
 
 class App extends Component {
     render() {
+        if (this.props.isFetching) {
+            return <span>Loading...</span>
+        }
+        if (this.props.error) {
+            return <span>Error</span>
+        }
+
         return (
             <ErrorBoundary>
                 <Router history={history}>
                     <div className="container">
                         <NavigationItems/>
                         <hr/>
-                        {this.props.login ?
+                        {this.props.isLogged ?
                             <Switch>
                                 <Route exact path='/' component={Home}/>
                                 <Route path='/bookings' component={Bookings}/>
@@ -30,11 +38,16 @@ class App extends Component {
             </ErrorBoundary>
         );
     }
+
+
 }
 
 const mapStateToProps = (state) => {
     return {
-        login: state.login
+        isFetching: state.loginReducer.isFetching,
+        data: state.loginReducer.data,
+        isLogged: state.loginReducer.isLogged,
+        error: state.loginReducer.error
     }
 }
 

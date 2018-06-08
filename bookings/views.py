@@ -33,8 +33,10 @@ def api_login(request):
             # "last_name": user.last_name,
             # "email": user.email,
             # "is_staff": user.is_staff
+            "login": True
         })
-        return JsonResponse(list(data_user), safe=False)
+
+        return JsonResponse(data_user, safe=False)
 
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -112,11 +114,12 @@ def detail(request, pk):
 @login_required
 def create(request):
     data = json.loads(request.body.decode('utf-8'))
+
     if request.method == 'POST':
         booking = Event(
             author=data['author'],
             title=data['title'],
-            description=data['description'],
+            description=data['msg'],
             start=data['start'],
             end=data['end'],
             hex_color=data['hex_color']
@@ -132,25 +135,26 @@ def edit(request, pk):
     data = json.loads(request.body.decode('utf-8'))
 
     booking = Event.objects.get(pk=pk)
-    booking.title = data['title']
-    booking.description = data['description']
-    booking.status = data['status']
-    booking.hex_color = data['hex_color']
+    booking.title = data['data']['title']
+    booking.description = data['data']['msg']
+    booking.status = data['data']['status']
+    booking.hex_color = data['data']['hex_color']
     booking.save()
 
-    details = Event.objects.filter(author=data['author'], active=True).values()
+    details = Event.objects.filter(author=data['data']['author'], active=True).values()
 
     return JsonResponse(list(details), safe=False)
 
 @login_required
 def delete(request, pk):
     data = json.loads(request.body.decode('utf-8'))
+
     if request.method == 'POST':
         entry = get_object_or_404(Event, pk=pk)
         entry.active = False
         # entry.delete()
         entry.save()
 
-        details = Event.objects.filter(author=data['author'], active=True).values()
+        details = Event.objects.filter(author=data['data']['id'], active=True).values()
 
         return JsonResponse(list(details), safe=False)
