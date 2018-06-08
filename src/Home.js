@@ -1,17 +1,19 @@
 import React from 'react'
 import Login from "./Login";
 import {connect} from "react-redux";
+import Booking from "./Booking";
 
 const Home = (props) => {
     return (
         <div>
-            {!props.login && <Login redirect={this.handleShow}/>}
+            {!props.isLogged && <Login redirect={this.handleShow}/>}
+            {props.isLogged && <Booking redirect={this.handleShow}/>}
         </div>
     )
 }
 const mapStateToProps = (state) => {
     return {
-        login: state.login,
+        isLogged: state.loginReducer.isLogged,
     }
 }
 

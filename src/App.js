@@ -12,11 +12,18 @@ import {loginReducer} from './reducers/loginReducer'
 
 class App extends Component {
     render() {
-        if (this.props.isFetching) {
-            return <span>Loading...</span>
-        }
         if (this.props.error) {
-            return <span>Error</span>
+            return (
+                <ErrorBoundary>
+                    <Router history={history}>
+                        <div className="container">
+                            <NavigationItems/>
+                            <hr/>
+                            <Route exact path='/' component={Home}/>
+                        </div>
+                    </Router>
+                </ErrorBoundary>
+            )
         }
 
         return (
@@ -24,6 +31,7 @@ class App extends Component {
                 <Router history={history}>
                     <div className="container">
                         <NavigationItems/>
+                        {this.props.isFetching && <span>Loading...</span>}
                         <hr/>
                         {this.props.isLogged ?
                             <Switch>
@@ -38,8 +46,6 @@ class App extends Component {
             </ErrorBoundary>
         );
     }
-
-
 }
 
 const mapStateToProps = (state) => {

@@ -31,6 +31,7 @@ class Login extends Component {
     render() {
         return (
             <div>
+                {this.props.error && <h6 className="warning">Username ou password incorretos!</h6>}
                 <form ref="form_bookings" className="form">
                     <div className="col-xs-6 form-group">
                         <label htmlFor="">Nome</label>
