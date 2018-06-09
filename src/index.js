@@ -8,7 +8,7 @@ import reducer from './reducers/index'
 import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import logger from 'redux-logger'
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import MuiThemeProvider from './@material-ui/core/styles/MuiThemeProvider';
 
 
 let store = createStore(reducer,
