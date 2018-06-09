@@ -7,6 +7,7 @@ import moment from 'moment';
 
 
 import 'react-datepicker/dist/react-datepicker.css';
+import {connect} from "react-redux";
 
 class Bookings extends Component {
     constructor(props) {
@@ -25,17 +26,14 @@ class Bookings extends Component {
     }
 
     componentDidMount() {
-        // axios.get(`/bookings/${this.props.user}`)
-        axios.get(`/bookings/today/1`)
+        axios.get(`/bookings/today/${this.props.data.id}`)
             .then(res => {
                 const bookings = res.data
-                // console.log('TODAY: ', bookings)
                 this.setState({bookings: bookings})
             })
             .catch(err => {
                 console.log(err.response)
             })
-
     }
 
     handleChangeStart = (date) => {
@@ -50,7 +48,6 @@ class Bookings extends Component {
         })
     }
 
-
     datesHandle = (event) => {
         event.preventDefault()
 
@@ -59,10 +56,9 @@ class Bookings extends Component {
         let start_date = this.state.startDate
         let end_date = this.state.endDate
 
-
         axios({
             method: "post",
-            url: "/bookings/today/1",
+            url: `/bookings/today/${this.props.data.id}`,
             data: {
                 start_date: start_date,
                 end_date: end_date,
@@ -77,8 +73,6 @@ class Bookings extends Component {
             .catch(err => {
                 console.log('ERRO: ', err)
             })
-
-
     }
 
     toggleDiv = () => {
@@ -110,7 +104,7 @@ class Bookings extends Component {
                         onChange={this.handleChangeEnd}
                         className="form-control"
                     />
-                    <br />
+                    <br/>
                     <button type="submit" onClick={(e) => this.datesHandle(e)} className="btn btn-primary">Enviar
                     </button>
                 </div>
@@ -141,4 +135,10 @@ class Bookings extends Component {
     }
 }
 
-export default Bookings
+const mapStateToProps = (state) => {
+    return {
+        data: state.loginReducer.data
+    }
+}
+
+export default connect(mapStateToProps)(Bookings)

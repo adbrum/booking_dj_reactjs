@@ -1,19 +1,5 @@
 import axios from 'axios'
 
-export const loginSuccess = (value) => {
-    return {
-        type: 'LOGIN',
-        value: value
-    };
-}
-
-export function logout(value) {
-    return {
-        type: 'LOGOUT',
-        value: value
-    };
-}
-
 //REDUX THUNKS
 export const loadLoginRequest = () => {
     return {
@@ -35,6 +21,15 @@ export const loadLoginSuccess = (data) => {
     }
 }
 
+export const loadLogoutSuccess = () => {
+    console.log('XXXXXXXXXXXXXXXX LOGOUT: ')
+    return {
+        type: 'LOAD_LOGOUT_SUCCESS',
+        // data: data
+    }
+}
+
+
 
 export const loadLogin = (data) => {
     return dispatch => {
@@ -45,6 +40,14 @@ export const loadLogin = (data) => {
                 password: data.password,
             })
             .then(({data}) => dispatch(loadLoginSuccess(data)))
+            .catch(() => dispatch(loadLoginError()))
+    }
+}
+
+export const loadLogout = () => {
+    return dispatch => {
+        dispatch(loadLogoutSuccess())
+        axios.post('/api-auth/logout/')
             .catch(() => dispatch(loadLoginError()))
     }
 }
@@ -79,21 +82,3 @@ export const loadBooking = (data) => { //data => id
             .catch(() => dispatch(loadBookingError()))
     }
 }
-/*
-function loginError(value) {
-  return {
-    type: 'BOOKINGS_ERROR',
-    value: value
-  };
-}
-
-function loginRequest(username, password) {
-  return {
-    type: 'BOOKINGS_REQUEST',
-    payload: {
-      username,
-      password
-    },
-  };
-}
-*/

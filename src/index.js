@@ -8,6 +8,7 @@ import reducer from './reducers/index'
 import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import logger from 'redux-logger'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 
 
 let store = createStore(reducer,
@@ -18,5 +19,10 @@ axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.withCredentials = true;
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(
+    <MuiThemeProvider >
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </MuiThemeProvider>, document.getElementById('root'));
 registerServiceWorker();

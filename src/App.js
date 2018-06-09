@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component} from 'react'
 import {Route, Router, Switch} from 'react-router-dom'
-import Home from "./Home";
-import Bookings from "./Bookings";
-import Booking from "./Booking";
+import Home from "./Home"
+import Bookings from "./Bookings"
+import Booking from "./Booking"
 import history from './history'
-import NavigationItems from "./Navigation/NavigationItems";
-import Logout from "./Logout";
-import ErrorBoundary from "./ErrorBoundary";
+import NavigationItems from "./Navigation/NavigationItems"
+import ErrorBoundary from "./ErrorBoundary"
 import {connect} from 'react-redux'
 import {loginReducer} from './reducers/loginReducer'
 
@@ -38,13 +37,12 @@ class App extends Component {
                                 <Route exact path='/' component={Home}/>
                                 <Route path='/bookings' component={Bookings}/>
                                 <Route exact path='/booking' component={Booking}/>
-                                <Route path='/logout' component={Logout}/>
                             </Switch>
                             : <Route exact path='/' component={Home}/>}
                     </div>
                 </Router>
             </ErrorBoundary>
-        );
+        )
     }
 }
 

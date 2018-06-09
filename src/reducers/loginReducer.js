@@ -27,6 +27,13 @@ const loginReducer = (state = INITIAL_STATE, action) => {
             isLogged: false,
             error: true
         }
+    } else if (action.type === 'LOAD_LOGOUT_SUCCESS') {
+        return {
+            isFetching: false,
+            data: [],
+            isLogged: false,
+            error: false
+        }
     }
 
     return state

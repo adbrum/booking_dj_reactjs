@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import {Link, Redirect, Route} from 'react-router-dom'
-import Success from "./Success";
 import axios from 'axios'
 import {connect} from "react-redux";
 
@@ -23,7 +22,7 @@ class DetailBooking extends Component {
     }
 
     componentDidMount() {
-        axios.get(`/booking/${this.props.id}`)
+        axios.get(`/booking/${this.props.data.id}`)
             .then(res => {
                 const details = res.data
                 //console.log(details)
@@ -107,10 +106,6 @@ class DetailBooking extends Component {
     }
 
     render() {
-        if (this.state.redirect === 'success') {
-            return <Route
-                render={(props) => <Success exclude={this.state.exclude} data={this.state.details} {...props}/>}/>
-        }
         if (this.state.redirect === 'cancel') {
             return <Redirect to={`/bookings`}/>
         }
@@ -176,7 +171,7 @@ class DetailBooking extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        id: state.id
+        data: state.loginReducer.data
     }
 }
 
