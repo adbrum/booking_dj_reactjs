@@ -24,6 +24,7 @@ const styles = {
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
+        color: 'inherit'
     },
 }
 
@@ -67,18 +68,20 @@ class MenuAppBar extends Component {
                         </IconButton>
                         {!this.props.isLogged && (
                             <Typography variant="title" color="inherit" className={classes.flex}>
-                                <Button href="/" color="inherit" style={{fontSize: '14px'}}>Home</Button>
+                                <Button href="/" color="inherit" style={{
+                                    fontSize: '14px',
+                                }}>Home</Button>
                             </Typography>
                         )}
                         {this.props.isLogged && (
                             <Typography variant="title" color="inherit" className={classes.flex}>
-                                <Button variant="title" color="inherit" className={classes.button} component={Link}
+                                <Button color="inherit" className={classes.button} component={Link}
                                         style={{fontSize: '14px'}}
                                         to="/">Home</Button>
-                                <Button variant="title" color="inherit" className={classes.button} component={Link}
+                                <Button color="inherit" className={classes.button} component={Link}
                                         style={{fontSize: '14px'}}
                                         to="/booking">Agendar</Button>
-                                <Button variant="title" color="inherit" className={classes.button} component={Link}
+                                <Button color="inherit" className={classes.button} component={Link}
                                         style={{fontSize: '14px'}}
                                         to="/bookings">Agendamentos</Button>
                             </Typography>

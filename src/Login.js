@@ -4,20 +4,29 @@ import {loadLogin} from "./actions"
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button';
+import {MuiThemeProvider} from "@material-ui/core/umd/material-ui.production.min";
+
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-  },
-  menu: {
-    width: 200,
-  },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    menu: {
+        width: 200,
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        display: 'none',
+    },
 })
 
 class Login extends Component {
@@ -51,23 +60,25 @@ class Login extends Component {
     }
 
     handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    })
-  }
+        this.setState({
+            [name]: event.target.value,
+        })
+    }
 
     render() {
+        const {classes} = this.props
         return (
+            <MuiThemeProvider>
             <div className="row col-xs-6">
-                <form ref="form_bookings" className={this.props.classes.container} noValidate autoComplete="off">
+                <form ref="form_bookings" className={classes.container} noValidate autoComplete="off">
                     <div className="col-xs-6 form-group">
                         <TextField style={{fontSize: '14px'}}
-                            className={this.props.classes.margin}
-                            id="username"
-                            label="Nome"
-                            value={this.state.username}
-                            onChange={this.handleChange('username')}
-                          />
+                                   className={this.props.classes.margin}
+                                   id="username"
+                                   label="Nome"
+                                   value={this.state.username}
+                                   onChange={this.handleChange('username')}
+                        />
                         <TextField
                             className={this.props.classes.margin}
                             id="password"
@@ -77,19 +88,25 @@ class Login extends Component {
                             value={this.state.password}
                             onChange={this.handleChange('password')}
                             onKeyUp={(e) => this.handleEnter(e)}
-                          />
+                        />
                         <hr/>
-                        <button type="submit" onClick={(e) => this.loginHandle(e)} className="btn btn-success">Login
-                        </button>
+                        <Button style={{fontSize: '14px'}}
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            type="submit"
+                            onClick={(e) => this.loginHandle(e)}>Login
+                        </Button>
                     </div>
                 </form>
             </div>
+            </MuiThemeProvider>
         )
     }
 }
 
 Login.propTypes = {
-  classes: PropTypes.object.isRequired,
+    classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => {
