@@ -1,125 +1,55 @@
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
-import MenuItem from 'material-ui/Menu/MenuItem';
-import Menu from 'material-ui/Menu';
+import React from 'react';
+import {Link} from 'react-router-dom'
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import Button from "material-ui/Button";
 import {loadLogout} from "../actions";
-import {withStyles} from 'material-ui/styles';
-const styles = {
-    root: {
-        flexGrow: 1,
-    },
-    flex: {
-        flex: 1,
-    },
-    menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
-        fontSize: 14,
-    },
-};
 
-class NavigationItems extends Component {
-    state = {
-        anchorEl: null,
+const NavigationItems = (props) => {
+
+    const handleLogout = (event) => {
+        props.loadLogout()
     };
 
-    handleLogout = (event) => {
-        this.props.loadLogout()
-    };
-
-    handleMenu = event => {
-        this.setState({anchorEl: event.currentTarget});
-    };
-
-    handleClose = () => {
-        this.setState({
-            anchorEl: null,
-        });
-    };
-
-    render() {
-        const {classes} = this.props;
-        const {anchorEl} = this.state;
-        const open = Boolean(anchorEl);
-        return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                            <MenuIcon/>
-                        </IconButton>
-                        {this.props.isLogged ?
-                            <Typography variant="title" color="inherit" className={classes.flex}>
-                                <Button className={classes.menuButton}
-                                        color="inherit">
-                                    <Link to="/" style={{'color': '#ffff'}}>HOME</Link>
-                                </Button>
-                                <Button className={classes.menuButton} color="inherit">
-                                    <Link to="/booking" style={{'color': '#ffff'}}>AGENDAR</Link>
-                                </Button>
-                                <Button className={classes.menuButton} color="inherit">
-                                    <Link to="/bookings" style={{'color': '#ffff'}}>AGENDAMENTOS</Link>
-                                </Button>
-                            </Typography>
-                            :
-                            <Typography variant="title" color="inherit" className={classes.flex}>
-                                <Button className={classes.menuButton}
-                                        color="inherit">
-                                    <Link to="/" style={{'color': '#ffff'}}>HOME</Link>
-                                </Button>
-                            </Typography>
-                        }
-                        {this.props.isLogged && (
-                            <div>
-                                <IconButton
-                                    aria-owns={open ? 'menu-appbar' : null}
-                                    aria-haspopup="true"
-                                    onClick={this.handleMenu}
-                                    color="inherit"
-                                    label="Teste"
-                                > {this.props.isLogged ? this.props.data.username.toString() : "Utilizador"} {' '}
-                                    <AccountCircle/>
-                                </IconButton>
-                                <Menu
-                                    id="menu-appbar"
-                                    anchorEl={anchorEl}
-                                    anchorOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    transformOrigin={{
-                                        vertical: 'top',
-                                        horizontal: 'right',
-                                    }}
-                                    open={open}
-                                    onClose={this.handleClose}
-                                >
-                                    <MenuItem onClick={this.handleClose}>Perfil</MenuItem>
-                                    <MenuItem onClick={this.handleLogout}>Sair</MenuItem>
-                                </Menu>
-                            </div>
-                        )}
-                    </Toolbar>
-                </AppBar>
+    return (
+        <nav className="navbar navbar-inverse">
+            <div className="container-fluid">
+                <div className="navbar-header">
+                    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span className="sr-only">Toggle navigation</span>
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                        <span className="icon-bar"/>
+                    </button>
+                    <Link className="navbar-brand" to="/">Agenda de marcações</Link>
+                </div>
+                <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    {props.isLogged ?
+                            <ul className="nav navbar-nav">
+                            <li><Link to="/">Home</Link></li>
+                            <li><Link to="/booking">Agendar</Link></li>
+                            <li><Link to="/bookings">Agendamentos</Link></li>
+                            </ul> :
+                            <ul className="nav navbar-nav">
+                                <li><Link to="/">Home</Link></li>
+                            </ul>}
+                    <ul className="nav navbar-nav navbar-right">
+                        <li className="dropdown">
+                            <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                {props.isLogged ? props.data.username.toString() : "Utilizador"}
+                                <span className="caret"/></a>
+                            <ul className="dropdown-menu">
+                                <li><a href="#">Perfil</a></li>
+                                <li role="separator" className="divider"/>
+                                <li><a href="#" onClick={handleLogout}>Sair</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        );
-    }
-
+        </nav>
+    )
 }
-
-NavigationItems.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = (state) => {
     return {
@@ -132,5 +62,5 @@ const mapDispatchToProps = (dispatch) => {
         loadLogout: () => dispatch(loadLogout()),
     }
 }
-let teste = (withStyles(styles)(NavigationItems))
-export default connect(mapStateToProps, mapDispatchToProps)(teste)
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavigationItems)

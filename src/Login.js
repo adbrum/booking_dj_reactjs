@@ -1,11 +1,33 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {loadLogin} from "./actions";
+import {loadLogin} from "./actions"
+import PropTypes from 'prop-types'
+import {withStyles} from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
 
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
+  },
+  menu: {
+    width: 200,
+  },
+})
 
 class Login extends Component {
     constructor(props) {
         super(props)
+
+        this.state = {
+            username: '',
+            password: ''
+        }
 
         this.loginHandle = this.loginHandle.bind(this)
     }
@@ -13,8 +35,8 @@ class Login extends Component {
     loginHandle(event) {
         event.preventDefault()
 
-        let username = this.refs.username.value
-        let password = this.refs.password.value
+        let username = this.state.username
+        let password = this.state.password
 
         this.props.loadData({
             'username': username,
@@ -28,17 +50,34 @@ class Login extends Component {
         }
     }
 
+    handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    })
+  }
+
     render() {
         return (
-            <div>
-                {this.props.error && <h6 className="warning">Username ou password incorretos!</h6>}
-                <form ref="form_bookings" className="form">
+            <div className="row col-xs-6">
+                <form ref="form_bookings" className={this.props.classes.container} noValidate autoComplete="off">
                     <div className="col-xs-6 form-group">
-                        <label htmlFor="">Nome</label>
-                        <input type="text" ref="username" placeholder="Nome" className="form-control"/>
-                        <label htmlFor="">Password</label>
-                        <input type="text" onKeyUp={(e) => this.handleEnter(e)} ref="password" placeholder="senha"
-                               className="form-control"/>
+                        <TextField style={{fontSize: '14px'}}
+                            className={this.props.classes.margin}
+                            id="username"
+                            label="Nome"
+                            value={this.state.username}
+                            onChange={this.handleChange('username')}
+                          />
+                        <TextField
+                            className={this.props.classes.margin}
+                            id="password"
+                            label="Password"
+                            type="password"
+                            autoComplete="current-password"
+                            value={this.state.password}
+                            onChange={this.handleChange('password')}
+                            onKeyUp={(e) => this.handleEnter(e)}
+                          />
                         <hr/>
                         <button type="submit" onClick={(e) => this.loginHandle(e)} className="btn btn-success">Login
                         </button>
@@ -47,6 +86,10 @@ class Login extends Component {
             </div>
         )
     }
+}
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => {
@@ -62,4 +105,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Login))

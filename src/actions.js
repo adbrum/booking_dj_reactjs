@@ -22,14 +22,10 @@ export const loadLoginSuccess = (data) => {
 }
 
 export const loadLogoutSuccess = () => {
-    console.log('XXXXXXXXXXXXXXXX LOGOUT: ')
     return {
         type: 'LOAD_LOGOUT_SUCCESS',
-        // data: data
     }
 }
-
-
 
 export const loadLogin = (data) => {
     return dispatch => {

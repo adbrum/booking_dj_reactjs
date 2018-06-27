@@ -6,8 +6,8 @@ import Booking from "./Booking";
 const Home = (props) => {
     return (
         <div>
-            {!props.isLogged && <Login redirect={this.handleShow}/>}
-            {props.isLogged && <Booking redirect={this.handleShow}/>}
+            {!props.isLogged && <div className="container-fluid"><Login /></div>}
+            {props.isLogged && <Booking />}
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Route, Router, Switch} from 'react-router-dom'
+import {withStyles} from '@material-ui/core/styles';
 import Home from "./Home"
 import Bookings from "./Bookings"
 import Booking from "./Booking"
@@ -8,15 +9,29 @@ import NavigationItems from "./Navigation/NavigationItems"
 import ErrorBoundary from "./ErrorBoundary"
 import {connect} from 'react-redux'
 import {loginReducer} from './reducers/loginReducer'
+import MenuAppBar from "./Navigation/MenuAppBar";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const styles = theme => ({
+    progress: {
+        margin: theme.spacing.unit * 2,
+    },
+});
 
 class App extends Component {
+    constructor(props) {
+        super(props)
+    }
+
     render() {
+        const {classes} = this.props
         if (this.props.error) {
             return (
                 <ErrorBoundary>
                     <Router history={history}>
                         <div className="container">
-                            <NavigationItems/>
+                            {/*<NavigationItems/>*/}
+                            <MenuAppBar/>
                             <hr/>
                             <Route exact path='/' component={Home}/>
                         </div>
@@ -29,8 +44,9 @@ class App extends Component {
             <ErrorBoundary>
                 <Router history={history}>
                     <div className="container">
-                        <NavigationItems/>
-                        {this.props.isFetching && <span>Loading...</span>}
+                        {/*<NavigationItems/>*/}
+                        <MenuAppBar/>
+                        {this.props.isFetching && <CircularProgress className={classes.progress} size={50}/>}
                         <hr/>
                         {this.props.isLogged ?
                             <Switch>
@@ -55,4 +71,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps)(withStyles(styles)(App))
