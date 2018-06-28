@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from "react-redux"
 import {loadLogout} from "../actions"
 import PropTypes from 'prop-types'
-import {withStyles} from '@material-ui/core/styles'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
+import withStyles from '@material-ui/core/styles/withStyles'
 
 const styles = {
     root: {

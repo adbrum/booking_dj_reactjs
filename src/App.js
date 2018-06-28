@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Route, Router, Switch} from 'react-router-dom'
-import {withStyles} from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles'
 import Home from "./Home"
 import Bookings from "./Bookings"
 import Booking from "./Booking"
@@ -10,7 +10,7 @@ import {connect} from 'react-redux'
 import {loginReducer} from './reducers/loginReducer'
 import MenuAppBar from "./Navigation/MenuAppBar";
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Grid from "@material-ui/core/es/Grid/Grid";
+import Grid from "@material-ui/core/Grid/Grid";
 
 const styles = theme => ({
     progress: {

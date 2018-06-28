@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {loadLogin} from "./actions"
-import PropTypes from 'prop-types'
-import {withStyles} from '@material-ui/core/styles'
+import withStyles from '@material-ui/core/styles/withStyles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
 
@@ -100,10 +99,6 @@ class Login extends Component {
             </div>
         )
     }
-}
-
-Login.propTypes = {
-    classes: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => {

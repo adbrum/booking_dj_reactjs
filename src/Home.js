@@ -1,13 +1,13 @@
 import React from 'react'
 import Login from "./Login"
 import {connect} from "react-redux"
-import {withStyles} from '@material-ui/core/styles'
-
+import withStyles from '@material-ui/core/styles/withStyles'
 import Booking from "./Booking"
-import Grid from "@material-ui/core/es/Grid/Grid"
-import Card from "@material-ui/core/es/Card/Card"
-import CardContent from "@material-ui/core/es/CardContent/CardContent"
-import Typography from "@material-ui/core/es/Typography/Typography"
+import Grid from "@material-ui/core/Grid/Grid"
+import Card from "@material-ui/core/Card/Card"
+import CardContent from "@material-ui/core/CardContent/CardContent"
+import Typography from "@material-ui/core/Typography/Typography"
+
 
 const styles = {
     card: {
