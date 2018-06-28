@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button';
-import {MuiThemeProvider} from "@material-ui/core/umd/material-ui.production.min";
 
 
 const styles = theme => ({
@@ -68,7 +67,6 @@ class Login extends Component {
     render() {
         const {classes} = this.props
         return (
-            <MuiThemeProvider>
             <div className="row col-xs-6">
                 <form ref="form_bookings" className={classes.container} noValidate autoComplete="off">
                     <div className="col-xs-6 form-group">
@@ -100,7 +98,6 @@ class Login extends Component {
                     </div>
                 </form>
             </div>
-            </MuiThemeProvider>
         )
     }
 }

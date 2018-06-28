@@ -5,12 +5,12 @@ import Home from "./Home"
 import Bookings from "./Bookings"
 import Booking from "./Booking"
 import history from './history'
-import NavigationItems from "./Navigation/NavigationItems"
 import ErrorBoundary from "./ErrorBoundary"
 import {connect} from 'react-redux'
 import {loginReducer} from './reducers/loginReducer'
 import MenuAppBar from "./Navigation/MenuAppBar";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from "@material-ui/core/es/Grid/Grid";
 
 const styles = theme => ({
     progress: {
@@ -46,7 +46,9 @@ class App extends Component {
                     <div className="container">
                         {/*<NavigationItems/>*/}
                         <MenuAppBar/>
-                        {this.props.isFetching && <CircularProgress className={classes.progress} size={50}/>}
+                        <Grid container justify="center" item xs={12}>
+                            {this.props.isFetching && <CircularProgress className={classes.progress} size={50}/>}
+                        </Grid>
                         <hr/>
                         {this.props.isLogged ?
                             <Switch>

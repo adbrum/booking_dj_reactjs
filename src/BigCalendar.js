@@ -71,7 +71,6 @@ class Event extends Component {
     }
 
     editBooking = (data) => {
-        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXX: ', data)
         this.props.editBooking(data[0])
         this.setState({
             type: 'edit',
